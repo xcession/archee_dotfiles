@@ -123,9 +123,9 @@ for s = 1, screen.count() do
         --myiconbox,
         mypromptbox,
         -- mytextbox,
-	text_datetime,
+        text_datetime,
         mylayoutbox[s],
-	text_battery,
+        text_battery,
         s == 1 and mysystray or nil
     })
     mystatusbar[s].screen = s
