@@ -24,11 +24,12 @@ tasklist    = {}
 --------------------------------------------------------------------------------
 --{{{ Variables
 
-modkey = "Mod4"
+modMask = "Mod4"
 
 -- Default apps
-terminal = "exec urxvt"
--- terminal = "exec xterm"
+term            = "urxvtc" or "urxvt"
+browser         = "/usr/bin/firefox"
+-- fileManager     = "thunar"
 
 -- The layouts
 layouts     = { "tile"
@@ -74,9 +75,9 @@ apptags =
 --------------------------------------------------------------------------------
 --{{{ Theme!
 
-theme_path = "/themes/xcession"
+--theme_path = "/themes/xcession"
 
-beautiful.font                      = "DejaVuSans 8"
+beautiful.font                      = "Terminus 8"
 
 beautiful.bg_normal                 = "#000000AA"
 beautiful.fg_normal                 = "#C4C4C4"
@@ -104,15 +105,11 @@ beautiful.menu_width                = "100"
 beautiful.taglist_squares           = true
 beautiful.titlebar_close_button     = true
 
--- Define if we want to use titlebar on all applications.
-use_titlebar = false
-
 --}}}
 --------------------------------------------------------------------------------
 --{{{ Register theme (don't change this)
 
 awful.beautiful.register(beautiful)
-awful.util.spawn("awsetbg "..wallpaper)
 awesome.font(beautiful.font)
 
 --}}}
@@ -134,11 +131,11 @@ awesomemenu         = { { "Edit config" , term.." -e vim "..awful.util.getdir("c
 -- Main menu
 mainmenu            = awful.menu.new({ items = { { "Terminal"    , term }
                                                , { "Firefox"     , browser }
-                                               , { "Thunar"      , fileManager }
+                                               --, { "Thunar"      , fileManager }
                                                , { "Gvim"        , "gvim" }
                                                , { "Gimp"        , "gimp" }
                                                , { "Screen"      , term.." -e screen -RR" }
-                                               , { "Ncmpcpp"     , term.." -e ncmpcpp" }
+                                               --, { "Ncmpcpp"     , term.." -e ncmpcpp" }
                                                , { "Awesome"     , awesomemenu }
                                                }
                                      })
@@ -323,7 +320,7 @@ keybinding({ modMask }              , "Left"    , awful.tag.viewprev):add()
 keybinding({ modMask }              , "Right"   , awful.tag.viewnext):add()
 keybinding({ modMask }              , "x"       , function () awful.util.spawn(term) end):add()
 keybinding({ modMask }              , "f"       , function () awful.util.spawn(browser) end):add()
-keybinding({ modMask }              , "t"       , function () awful.util.spawn(fileManager) end):add()
+--keybinding({ modMask }              , "t"       , function () awful.util.spawn(fileManager) end):add()
 keybinding({ modMask, "Control" }   , "r"       , function () promptbox[mouse.screen].text = awful.util.escape(awful.util.restart()) end):add()
 keybinding({ modMask, "Shift" }     , "q"       , awesome.quit):add()
 keybinding({ modMask }              , "m"       , awful.client.maximize):add()
