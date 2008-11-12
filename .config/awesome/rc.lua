@@ -1,36 +1,103 @@
---------------------------
--- XC8 Awesome 3 Config --
---------------------------
+--[[ awesome 3 configuration file by xcession
+     only works with awesome-gt newer than 20/10/08
+     last update: 12/10/08                          ]]
 
--- Include awesome library, with lots of useful function!
+------------------------------------------------------------------------
+--{{{ Imports
+
+-- Load default libraries
 require("awful")
-require("tabulous")
+--require("tabulous")
 require("beautiful")
+-- Naughty is a notification library (like gnome-notifications)
+require("naughty")
 
-theme_path = "/home/xcession/.config/awesome/themes/xcession"
+--}}}
+------------------------------------------------------------------------
+--{{{ Initialize some stuff
 
-terminal = "exec urxvt"
--- terminal = "exec xterm"
+tags        = {}
+statusbar   = {}
+promptbox   = {}
+layouticon  = {}
+taglist     = {}
+tasklist    = {}
+
+--}}}
+------------------------------------------------------------------------
+--{{{ Variables
+
 modkey = "Mod4"
 
-layouts = { "max", "tile", "tileleft", "floating" }
-defaultLayout = layouts[1]
+-- Default apps
+terminal = "exec urxvt"
+-- terminal = "exec xterm"
 
-floatapps =
-{
-    -- by class
-    ["mplayer"] = true,
-    ["pinentry"] = true,
-    ["gimp"] = true,
-    -- by instance
-    ["mocp"] = true
+-- The layouts
+layouts     = { "tile"
+              , "tileleft"
+              --, "tilebottom"
+              --, "tiletop"
+              --, "fairh"
+              --, "fairv"
+              --, "magnifier"
+              , "max"
+              , "floating"
+              }
+
+-- Text for the current layout
+layoutText  = { ["tile"]        = "Tiled"
+              , ["tileleft"]    = "TileLeft"
+              , ["tilebottom"]  = "TileBottom"
+              , ["tiletop"]     = "TileTop"
+              , ["fairh"]       = "FairH"
+              , ["fairv"]       = "FairV"
+              , ["magnifier"]   = "Magnifier"
+              , ["max"]         = "Max"
+              , ["floating"]    = "Floating"
+              }
+
+defaultLayout = layouts[3]
+
+-- Apps that should be forced floating
+floatapps   = {
+              -- by class
+              ["MPlayer"]   = true
+              , ["Gimp"]    = true
+              , ["Mirage"]  = true
+              -- by instance
+              , ["mocp"]    = true
 }
 
+-- App tags
 apptags =
 {
     -- ["Firefox"] = { screen = 1, tag = 2 },
     -- ["mocp"] = { screen = 2, tag = 4 },
 }
+
+--}}}
+------------------------------------------------------------------------
+--{{{ Theme!
+
+beautiful.font                  = "DejaVuSans 8"
+
+beautiful.bg_normal             = "#000000AA"
+beautiful.fg_normal             = "#C4C4C4"
+
+beautiful.bg_focus              = "#1C1C1CAA"
+beautiful.fg_focus              = "#3579A8"
+
+beautiful.bg_urgent             = "#3579A8AA"
+beautiful.fg_urgent             = "#EFEFEF"
+
+beautiful.border_width          = "1"
+beautiful.border_normal         = "#4C4C4C66"
+beautiful.border_focus          = "#3579A866"
+beautiful.border_marked         = "#FF000066"
+
+beautiful.taglist_squares_sel   = "/usr/share/awesome/themes/default/taglist/squarefw.png"
+beautiful.taglist_squares_unsel = "/usr/share/awesome/themes/default/taglist/squarew.png"
 
 -- Define if we want to use titlebar on all applications.
 use_titlebar = false
@@ -108,7 +175,7 @@ for s = 1, screen.count() do
     mylayoutbox[s]:mouse_add(mouse({ }, 3, function () awful.layout.inc(layouts, -1) end))
     mylayoutbox[s]:mouse_add(mouse({ }, 4, function () awful.layout.inc(layouts, 1) end))
     mylayoutbox[s]:mouse_add(mouse({ }, 5, function () awful.layout.inc(layouts, -1) end))
-    mylayoutbox[s].text = "<bg image=\"/usr/share/awesome/icons/layouts/tilew.png\" resize=\"true\"/>"
+    -- mylayoutbox[s].text = "<bg image=\"/usr/share/awesome/icons/layouts/tilew.png\" resize=\"true\"/>"
 end
 
 -- Create a statusbar for each screen and add it
@@ -388,7 +455,7 @@ function hook_arrange(screen)
     local layout = awful.layout.get(screen)
     if layout then
         mylayoutbox[screen].text =
-            "<bg image=\"/usr/share/awesome/icons/layouts/" .. awful.layout.get(screen) .. "w.png\" resize=\"true\"/>"
+            "<bg image=\"~/.config/awesome/icons/layouts/" .. awful.layout.get(screen) .. "w.png\" resize=\"true\"/>"
         else
             mylayoutbox[screen].text = "No layout."
     end
