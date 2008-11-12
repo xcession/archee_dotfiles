@@ -1,6 +1,6 @@
 --[[ awesome 3 configuration file by xcession
-     only works with awesome-gt newer than 13/10/08
-     last update: 13/10/08                          ]]
+     only works with awesome-gt newer than 13/10/2008
+     last update: 13/10/2008                          ]]
 
 --------------------------------------------------------------------------------
 --{{{ Imports
