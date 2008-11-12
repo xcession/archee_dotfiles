@@ -1,6 +1,6 @@
 --[[ awesome 3 configuration file by xcession
-     only works with awesome-gt newer than 20/10/08
-     last update: 12/10/08                          ]]
+     only works with awesome-gt newer than 13/10/08
+     last update: 13/10/08                          ]]
 
 --------------------------------------------------------------------------------
 --{{{ Imports
@@ -8,8 +8,6 @@
 -- Load default libraries
 require("awful")
 require("beautiful")
--- Naughty is a notification library (like gnome-notifications)
-require("naughty")
 
 --}}}
 --------------------------------------------------------------------------------
@@ -59,12 +57,9 @@ layoutText  = { ["tile"]        = "Tiled"
 defaultLayout = layouts[3]
 
 -- Apps that should be forced floating
-floatapps   = {
-              -- by class
-              ["MPlayer"]   = true
+floatapps   = { ["MPlayer"]   = true
               , ["Gimp"]    = true
               , ["Mirage"]  = true
-              -- by instance
               , ["mocp"]    = true
 }
 
@@ -78,6 +73,8 @@ apptags =
 --}}}
 --------------------------------------------------------------------------------
 --{{{ Theme!
+
+theme_path = "/themes/xcession"
 
 beautiful.font                      = "DejaVuSans 8"
 
