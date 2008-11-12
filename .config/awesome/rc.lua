@@ -1,6 +1,6 @@
 --[[ awesome 3 configuration file by xcession
-     only works with awesome-gt newer than 13/10/2008
-     last update: 13/10/2008                          ]]
+     only works with awesome-gt newer than 13/10/08
+     last update: 13/10/08                          ]]
 
 --------------------------------------------------------------------------------
 --{{{ Imports
@@ -8,6 +8,7 @@
 -- Load default libraries
 require("awful")
 require("beautiful")
+require("naughty")
 
 --}}}
 --------------------------------------------------------------------------------
@@ -193,11 +194,6 @@ batteryInfo("BAT1")
 memwidget = widget({ type = "textbox", name = "memwidget", align = "right" })
 -- Run it once so we don't have to wait for the hooks to see our memory usage
 memInfo()
-
--- Create the gmail widget
-gmailwidget = widget({ type = "textbox", name = "gmailwidget", align = "right" })
--- Run it once so we don't have to wait for the hooks to see our mails
-gmailInfo("/tmp/gmail-temp")
 
 -- Create a system tray
 systray = widget({ type = "systray", name = "systray", align = "right" })

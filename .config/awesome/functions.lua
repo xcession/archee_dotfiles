@@ -121,32 +121,4 @@ function memInfo()
     memwidget.text = spacer..setFg(beautiful.fg_focus, "Mem:")..spacer..memUsePct.."%"..spacer.."("..memInUse.."M)"..spacer
 end
 
--- GMail
-function gmailInfo(gmailFile)
-    local f = io.open(gmailFile)
-    local mails = ""
-    
-    if f ~= nil then
-        mails = f:read()
-        f:close()
- 
-        if tonumber(mails) > 0 then
-            mails = setBgFg(beautiful.bg_focus, "#ff6565", tostring(mails))
-            naughty.notify({ title      = "Mail Warning"
-                           , text       = "You have new mail! ("..tostring(mails)..")"
-                           , timeout    = 10
-                           , position   = "top_right"
-                           , fg         = beautiful.fg_focus
-                           , bg         = beautiful.bg_focus
-                           })
-        else
-            mails = tostring(mails)
-        end
-    else
-        mails = "N/A"
-    end
-    
-    gmailwidget.text = spacer..setFg(beautiful.fg_focus, "Mail:")..spacer..mails..spacer
-end
-
 --}}}
