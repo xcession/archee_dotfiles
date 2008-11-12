@@ -1,0 +1,50 @@
+-- awesome 3 theme file by xcession
+-- last update: 13/10/08
+
+--------------------------------------------------------------------------------
+
+font                = Terminus 8
+
+bg_normal           = #000000AA
+fg_normal           = #C4C4C4
+
+bg_focus            = #1C1C1CAA
+fg_focus            = #3579A8
+
+bg_urgent           = #3579A8AA
+fg_urgent           = #EFEFEF
+
+border_width        = 1
+border_normal       = #4C4C4C66
+border_focus        = #3579A866
+border_marked       = #FF000066
+
+# There are another variables sets
+# overriding the default one when
+# defined, the sets are:
+# [taglist|tasklist]_[bg|fg]_[focus|urgent]
+# titlebar_[bg|fg]_[normal|focus]
+# Example:
+#taglist_bg_focus = #ff0000
+
+# Display the taglist squares
+taglist_squares = true
+
+# You can add as many variables as
+# you wish and access them by using
+# beautiful.variable in your rc.lua
+#bg_widget    = #cc0000
+
+# Display close button inside titlebar
+titlebar_close_button = true
+
+# Define the image to load
+@ (if titlebar_close_button_[normal|focus] these values are ignored)
+#titlebar_close_button_img_normal = /titlebar/closea.png
+#titlebar_close_button_img_focus = /titlebar/closera.png
+# Or create your own close button
+#titlebar_close_button_normal = <span>...</span>
+#titlebar_close_button_focus = <span>...</span>
+
+# You can use your own command to set your wallpaper
+wallpaper_cmd = nitrogen --restore

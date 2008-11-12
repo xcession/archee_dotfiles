@@ -29,7 +29,7 @@ function clockInfo(dateformat, timeformat)
     local date = os.date(dateformat)
     local time = os.date(timeformat)
     
-    clockwidget.text = spacer..date..spacer..setFg(beautiful.fg_focus, time)..spacer
+    clockwidget.text = date..spacer..setFg(#3579A8, time)..spacer
 end
 
 -- Wifi signal strength
@@ -40,18 +40,11 @@ function wifiInfo(adapter)
     
     if wifiStrength == "0" then
         wifiStrength = setFg("#ff6565", wifiStrength.."%")
-        naughty.notify({ title      = "Wifi Warning"
-                       , text       = "Wireless Network is Down! ("..wifiStrength.."% connectivity)"
-                       , timeout    = 3
-                       , position   = "top_right"
-                       , fg         = beautiful.fg_focus
-                       , bg         = beautiful.bg_focus
-                       })
     else
         wifiStrength = wifiStrength.."%"
     end
     
-    wifiwidget.text = spacer..setFg(beautiful.fg_focus, "Wifi:")..spacer..wifiStrength..spacer
+    wifiwidget.text = spacer..setFg(#3579A8, "Wifi:")..spacer..wifiStrength..spacer
 end
 
 -- Battery (BAT1)
@@ -77,13 +70,7 @@ function batteryInfo(adapter)
             battery = setFg("#e6d51d", battery)
         elseif tonumber(battery) < 25 then
             if tonumber(battery) <= 10 then
-                naughty.notify({ title      = "Battery Warning"
-                               , text       = "Battery low!"..spacer..battery.."%"..spacer.."left!"
-                               , timeout    = 5
-                               , position   = "top_right"
-                               , fg         = beautiful.fg_focus
-                               , bg         = beautiful.bg_focus
-                               })
+                battery = setFg("#ff0000", battery)
             end
             battery = setFg("#ff6565", battery)
         else
@@ -94,7 +81,7 @@ function batteryInfo(adapter)
         battery = "A/C"
     end
     
-    batterywidget.text = spacer..setFg(beautiful.fg_focus, "Bat:")..spacer..dir..battery..dir..spacer
+    batterywidget.text = spacer..setFg(#3579A8, "Bat:")..spacer..dir..battery..dir..spacer
 end
 
 -- Memory

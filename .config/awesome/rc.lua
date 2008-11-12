@@ -8,7 +8,6 @@
 -- Load default libraries
 require("awful")
 require("beautiful")
-require("naughty")
 
 --}}}
 --------------------------------------------------------------------------------
@@ -59,7 +58,7 @@ layoutText  = { ["tile"]        = "Tiled"
 defaultLayout = layouts[3]
 
 -- Apps that should be forced floating
-floatapps   = { ["MPlayer"]   = true
+floatapps   = { ["MPlayer"] = true
               , ["Gimp"]    = true
               , ["Mirage"]  = true
               , ["mocp"]    = true
@@ -68,53 +67,25 @@ floatapps   = { ["MPlayer"]   = true
 -- App tags
 apptags =
 {
-    -- ["Firefox"] = { screen = 1, tag = 2 },
-    -- ["mocp"] = { screen = 2, tag = 4 },
+    -- ["Firefox"]  = { screen = 1, tag = 2 },
+    -- ["mocp"]     = { screen = 2, tag = 4 },
 }
 
 --}}}
 --------------------------------------------------------------------------------
 --{{{ Theme!
 
---theme_path = "/themes/xcession"
-
-beautiful.font                      = "Terminus 8"
-
-beautiful.bg_normal                 = "#000000AA"
-beautiful.fg_normal                 = "#C4C4C4"
-
-beautiful.bg_focus                  = "#1C1C1CAA"
-beautiful.fg_focus                  = "#3579A8"
-
-beautiful.bg_urgent                 = "#3579A8AA"
-beautiful.fg_urgent                 = "#EFEFEF"
-
-beautiful.border_width              = "1"
-beautiful.border_normal             = "#4C4C4C66"
-beautiful.border_focus              = "#3579A866"
-beautiful.border_marked             = "#FF000066"
-
-beautiful.taglist_squares_sel       = "/usr/share/awesome/themes/default/taglist/squarefw.png"
-beautiful.taglist_squares_unsel     = "/usr/share/awesome/themes/default/taglist/squarew.png"
-beautiful.tasklist_floating_icon    = "/usr/share/awesome/themes/default/tasklist/floatingw.png"
-beautiful.awesome_icon              = "/usr/share/awesome/icons/awesome16.png"
-
-beautiful.menu_submenu_icon         = awful.util.getdir("config").."/icons/submenu.png"
-beautiful.menu_height               = "16"
-beautiful.menu_width                = "100"
-
-beautiful.taglist_squares           = true
-beautiful.titlebar_close_button     = true
+theme_path = "/themes/xcession"
 
 --}}}
 --------------------------------------------------------------------------------
 --{{{ Register theme (don't change this)
 
+beautiful.init(theme_path)
 awful.beautiful.register(beautiful)
-awesome.font(beautiful.font)
 
 --}}}
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 --{{{ Load functions
 
 loadfile(awful.util.getdir("config").."/functions.lua")()
@@ -167,13 +138,29 @@ end
 --}}}
 --------------------------------------------------------------------------------
 --{{{ Widgets
--- Please note the functions feeding some of the widgets are found in functions.lua
 
 -- Simple spacer we can use to cleaner code
 spacer = " "
 -- Separator icon
 separator = widget({ type = "imagebox", name = "separator", align = "right" })
 separator.image = image(awful.util.getdir("config").."/icons/separators/link2.png")
+
+-- Create a taglist widget
+taglist = widget({ type = "taglist", name = "taglist" })
+taglist:mouse_add(mouse({}, 1, function (object, tag) awful.tag.viewonly(tag) end))
+taglist:mouse_add(mouse({ modkey }, 1, function (object, tag) awful.client.movetotag(tag) end))
+taglist:mouse_add(mouse({}, 3, function (object, tag) tag.selected = not tag.selected end))
+taglist:mouse_add(mouse({ modkey }, 3, function (object, tag) awful.client.toggletag(tag) end))
+taglist:mouse_add(mouse({ }, 4, awful.tag.viewnext))
+taglist:mouse_add(mouse({ }, 5, awful.tag.viewprev))
+taglist.label = awful.widget.taglist.label.all
+
+-- Create a tasklist widget
+tasklist = widget({ type = "tasklist", name = "tasklist" })
+tasklist:mouse_add(mouse({ }, 1, function (object, c) client.focus = c; c:raise() end))
+tasklist:mouse_add(mouse({ }, 4, function () awful.client.focusbyidx(1) end))
+tasklist:mouse_add(mouse({ }, 5, function () awful.client.focusbyidx(-1) end))
+tasklist.label = awful.widget.tasklist.label.currenttags
 
 -- Create the clock widget
 clockwidget = widget({ type = "textbox", name = "clockwidget", align = "right" })
@@ -197,20 +184,6 @@ memInfo()
 
 -- Create a system tray
 systray = widget({ type = "systray", name = "systray", align = "right" })
-
--- Initialize which buttons do what when clicking the taglist
-taglist.buttons     = { button({ }          , 1, awful.tag.viewonly)
-                      , button({ modMask }  , 1, awful.client.movetotag)
-                      , button({ }          , 3, function (tag) tag.selected = not tag.selected end)
-                      , button({ modMask }  , 3, awful.client.toggletag)
-                      , button({ }          , 4, awful.tag.viewnext)
-                      , button({ }          , 5, awful.tag.viewprev) 
-                      }
--- Initialize which buttons do what when clicking the tasklist
-tasklist.buttons    = { button({ }          , 1, function (c) client.focus = c; c:raise() end)
-                      , button({ }          , 4, function () awful.client.focus.byidx(1) end)
-                      , button({ }          , 5, function () awful.client.focus.byidx(-1) end) 
-                      }
 
 -- From here on, everything gets created for every screen
 for s = 1, screen.count() do
@@ -244,9 +217,9 @@ for s = 1, screen.count() do
         border_width = beautiful.border_width 
     })
     -- Add our widgets to the wibox
-    statusbar[s].widgets = { taglist[s]
+    statusbar[s].widgets = { taglist
                            , layouticon[s]
-                           , tasklist[s]
+                           , tasklist
                            , promptbox[s]
                            , separator
                            , memwidget
