@@ -1,0 +1,32 @@
+!Xft settings ]----------
+Xft.dpi:		96
+Xft.hinting:		true
+!Xft.hintstyle:		hintfull
+Xft.hintstyle:		hintslight
+Xft.antialias:		1
+Xft.rgba:		rgb
+
+!XTerm settings ]----------
+XTerm.*.background:	#000000
+XTerm.*.foreground:	#ffffff
+XTerm.*.saveLines:	1000
+!XTerm.*.font:		DejaVuSansMono
+XTerm.*.scrollBar:	false
+
+!URxvt settings ]----------
+URxvt.*.background:	#000000
+URxvt.*.foreground:	#ffffff
+URxvt.*.saveLines:	1000
+URxvt.*.font:		xft:DejaVuSansMono-9
+URxvt.*.scrollBar:	false
+URxvt.*.scrollstyle:	rxvt
+URxvt.*.scrollColor:	#0096d1
+
+!URxvt.depth:		32
+URxvt.urlLauncher:	firefox
+
+URxvt.transparent:	1
+URxvt.shading:		10
+
+!URxvt.fading:		40
+
