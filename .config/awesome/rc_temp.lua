@@ -53,7 +53,7 @@ apptags =
 --------------------------------------------------------------------------------
 --{{{ Theme!
 
-theme_path = "awful.util.getdir("config").."/themes/xcession"
+theme_path = ""awful.util.getdir("config").."/themes/xcession"
 
 -- Define if we want to use titlebar on all applications.
 use_titlebar = false
