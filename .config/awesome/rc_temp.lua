@@ -1,6 +1,6 @@
 --[[ awesome 3 configuration file by xcession
-     only works with awesome-gt newer than 13/10/08
-     last update: 13/10/08                          ]]
+     only works with awesome-git newer than 20/10/08
+     last update: 13/11/08                          ]]
 
 --------------------------------------------------------------------------------
 --{{{ Imports
@@ -13,7 +13,7 @@ require("beautiful")
 --------------------------------------------------------------------------------
 --{{{ Variables
 
-terminal = "exec urxvt"
+terminal = "urxvt"
 
 modkey = "Mod4"
 
@@ -39,7 +39,7 @@ floatapps =
     ["Gimp"]        = true,
     ["Mirage"]      = true,
     -- by instance
-    ["mocp"] = true
+    ["mocp"]        = true
 }
 
 -- App tags
@@ -53,17 +53,16 @@ apptags =
 --------------------------------------------------------------------------------
 --{{{ Theme!
 
-theme_path = "/home/xcession/.config/awesome/themes/xcession"
+theme_name = "xcession"
 
--- Define if we want to use titlebar on all applications.
 use_titlebar = false
--- }}}
 
 --}}}
 --------------------------------------------------------------------------------
 --{{{ Register theme (don't change this)
 
-beautiful.init(theme_path)
+--beautiful.init(theme_path)
+beautiful.init(awful.util.getdir("config").."/themes/"..theme_name)
 awful.beautiful.register(beautiful)
 
 --}}}
