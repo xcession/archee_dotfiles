@@ -1,32 +1,63 @@
 !Xft settings ]----------
-Xft.dpi:		96
-Xft.hinting:		true
-!Xft.hintstyle:		hintfull
-Xft.hintstyle:		hintslight
-Xft.antialias:		1
-Xft.rgba:		rgb
+Xft.dpi:		        96
+Xft.lcdfilter:          lcdfilterlegacy
+Xft.hinting:		    true
+Xft.hintstyle:		    hintslight
+Xft.antialias:		    1
+Xft.rgba:		        rgb
 
-!XTerm settings ]----------
-XTerm.*.background:	#000000
-XTerm.*.foreground:	#ffffff
-XTerm.*.saveLines:	1000
-!XTerm.*.font:		DejaVuSansMono
-XTerm.*.scrollBar:	false
+Xcursor.theme:          neutral
 
-!URxvt settings ]----------
-URxvt.*.background:	#000000
-URxvt.*.foreground:	#ffffff
-URxvt.*.saveLines:	1000
-URxvt.*.font:		xft:DejaVuSansMono-9
-URxvt.*.scrollBar:	false
-URxvt.*.scrollstyle:	rxvt
-URxvt.*.scrollColor:	#0096d1
+!XTerm*font:		    DejaVuSansMono
+XTerm*scrollBar:	    false
+XTerm*background:	    #000000
+XTerm*foreground:	    #ffffff
+XTerm*saveLines:	    1000
+xterm*utf8:             2
 
-!URxvt.depth:		32
-URxvt.urlLauncher:	firefox
 
-URxvt.transparent:	1
-URxvt.shading:		10
+URxvt*font:             -*-terminus-medium-r-*-*-12-120-*-*-*-*-*-*
+URxvt*boldFont:         -*-terminus-medium-r-*-*-12-120-*-*-*-*-*-*
+!URxvt*font:		        xft:DejaVuSansMono-9
+URxvt*scrollBar:	    false
+URxvt*background:	    #000000
+URxvt*foreground:	    #ffffff
+URxvt*saveLines:	    1000
+URxvt*scrollBar:	    false
+URxvt*scrollstyle:	    rxvt
+URxvt*scrollColor:	    #0096d1
 
-!URxvt.fading:		40
+URxvt.urlLauncher:	    /usr/bin/firefox
+
+URxvt*tintColor:        #000000
+URxvt*shading:          30
+
+!--[Colours]--! 
+URxvt*cursorColor:      #FFAF00
+
+! tangoesque scheme
+! Black
+*color0:        #000000
+*color8:        #555753
+! Red
+*color1:        #ff6565
+*color9:        #ff8d8d
+! Green
+*color2:        #93d44f
+*color10:       #c8e7a8
+! Yellow
+*color3:        #eab93d
+*color11:       #ffc123
+! Blue
+*color4:        #204a87
+*color12:       #3465a4
+! Mangenta
+*color5:        #ce5c00
+*color13:       #f57900
+! Cyan 
+*color6:        #89b6e2
+*color14:       #46a4ff
+! White
+*color7:        #cccccc
+*color15:       #ffffff
 
