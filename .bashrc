@@ -8,6 +8,7 @@ alias cp="cp -v"
 alias mplayer="mplayer -idx"
 alias grep="grep --color=auto"
 #alias irb="irb --simple-prompt"
+alias battery="~/bin/battery.pl"
 
 alias ls="ls -hF -a --color=auto"
 
