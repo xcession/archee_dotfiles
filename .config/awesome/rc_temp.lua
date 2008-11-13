@@ -1,63 +1,76 @@
---------------------------
--- XC8 Awesome 3 Config --
---------------------------
+--[[ awesome 3 configuration file by xcession
+     only works with awesome-gt newer than 13/10/08
+     last update: 13/10/08                          ]]
 
--- Include awesome library, with lots of useful function!
+--------------------------------------------------------------------------------
+--{{{ Imports
+
+-- Load default libraries
 require("awful")
 require("beautiful")
 
-theme_path = "/home/xcession/.config/awesome/themes/xcession"
+--}}}
+--------------------------------------------------------------------------------
+--{{{ Variables
 
 terminal = "exec urxvt"
 
 modkey = "Mod4"
 
-layouts = { "tile"
-	  , "tileleft"
-	  , "tilebottom"
-	  , "tiletop"
-	  , "floating"
-	  , "max"
-  	  }
+-- The layouts
+layouts     = { "tile"
+              , "tileleft"
+              --, "tilebottom"
+              --, "tiletop"
+              --, "fairh"
+              --, "fairv"
+              --, "magnifier"
+              , "max"
+              , "floating"
+              }
 
-defaultLayout = layouts[1]
+defaultLayout = layouts[3]
 
+-- Apps that should be forced floating
 floatapps =
 {
     -- by class
-    ["MPlayer"] = true,
-    ["pinentry"] = true,
-    ["gimp"] = true,
+    ["MPlayer"]     = true,
+    ["Gimp"]        = true,
+    ["Mirage"]      = true,
     -- by instance
     ["mocp"] = true
 }
 
+-- App tags
 apptags =
 {
-    -- ["Firefox"] = { screen = 1, tag = 2 },
-    -- ["mocp"] = { screen = 2, tag = 4 },
+    -- ["Firefox"]  = { screen = 1, tag = 2 },
+    -- ["mocp"]     = { screen = 2, tag = 4 },
 }
+
+--}}}
+--------------------------------------------------------------------------------
+--{{{ Theme!
+
+theme_path = "awful.util.getdir("config").."/themes/xcession"
 
 -- Define if we want to use titlebar on all applications.
 use_titlebar = false
 -- }}}
 
--- {{{ Initialization
--- Initialize theme (colors).
-beautiful.init(theme_path)
+--}}}
+--------------------------------------------------------------------------------
+--{{{ Register theme (don't change this)
 
--- Register theme in awful.
--- This allows to not pass plenty of arguments to each function
--- to inform it about colors we want it to draw.
+beautiful.init(theme_path)
 awful.beautiful.register(beautiful)
 
--- Uncomment this to activate autotabbing
--- tabulous.autotab_start()
--- }}}
+--}}}
+--------------------------------------------------------------------------------
+--{{{ Tags
 
--- {{{ Tags
--- Define tags table.
-tags = {}
+--[[tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
     tags[s] = {}
@@ -69,10 +82,31 @@ for s = 1, screen.count() do
     end
     -- I'm sure you want to see at least one tag.
     tags[s][1].selected = true
+end]]
+for s = 1, screen.count() do
+    tags[s] = {}
+    -- Give the first 3 tag special names
+    tags[s][1] = tag({ name = "1-term", layout = layouts[1], mwfact = 0.618033988769 })
+    tags[s][2] = tag({ name = "2-web", layout = layouts[1] })
+    tags[s][3] = tag({ name = "3-dev", layout = layouts[4], mwfact = 0.15 })
+    -- Put them on the screen
+    for tagnumber = 1, 3 do
+        tags[s][tagnumber].screen = s
+    end
+    -- Automatically name the next 6 tags after their tag number and put them on the screen
+    for tagnumber = 4, 9 do
+        tags[s][tagnumber] = tag({ name = tagnumber, layout = layouts[1] })
+        tags[s][tagnumber].screen = s
+    end
+    -- Select at least one tag
+    tags[s][1].selected = true
 end
 -- }}}
 
--- {{{ Statusbar
+--}}}
+--------------------------------------------------------------------------------
+--{{{ Widgets
+
 -- Create a taglist widget
 mytaglist = widget({ type = "taglist", name = "mytaglist" })
 mytaglist:mouse_add(mouse({}, 1, function (object, tag) awful.tag.viewonly(tag) end))
@@ -244,53 +278,6 @@ keybinding({ modkey, "Ctrl" }, "i", function ()
                                         end
                                     end):add()
 
---- Tabulous, tab manipulation
-keybinding({ modkey, "Control" }, "y", function ()
-    local tabbedview = tabulous.tabindex_get()
-    local nextclient = awful.client.next(1)
-
-    if not tabbedview then
-        tabbedview = tabulous.tabindex_get(nextclient)
-
-        if not tabbedview then
-            tabbedview = tabulous.tab_create()
-            tabulous.tab(tabbedview, nextclient)
-        else
-            tabulous.tab(tabbedview, client.focus)
-        end
-    else
-        tabulous.tab(tabbedview, nextclient)
-    end
-end):add()
-
-keybinding({ modkey, "Shift" }, "y", tabulous.untab):add()
-
-keybinding({ modkey }, "y", function ()
-   local tabbedview = tabulous.tabindex_get()
-
-   if tabbedview then
-       local n = tabulous.next(tabbedview)
-       tabulous.display(tabbedview, n)
-   end
-end):add()
-
--- Client awful tagging: this is useful to tag some clients and then do stuff like move to tag on them
-keybinding({ modkey }, "t", awful.client.togglemarked):add()
-keybinding({ modkey, 'Shift' }, "t", function ()
-    local tabbedview = tabulous.tabindex_get()
-    local clients = awful.client.getmarked()
-
-    if not tabbedview then
-        tabbedview = tabulous.tab_create(clients[1])
-        table.remove(clients, 1)
-    end
-
-    for k,c in pairs(clients) do
-        tabulous.tab(tabbedview, c)
-    end
-
-end):add()
-
 for i = 1, keynumber do
     keybinding({ modkey, "Shift" }, "F" .. i,
                    function ()
@@ -400,22 +387,6 @@ function hook_arrange(screen)
         local c = awful.client.focus.history.get(screen, 0)
         if c then client.focus = c end
     end
-
-    -- Uncomment if you want mouse warping
-    --[[
-    local sel = client.focus
-    if sel then
-        local c_c = sel:coords()
-        local m_c = mouse.coords()
-
-        if m_c.x < c_c.x or m_c.x >= c_c.x + c_c.width or
-            m_c.y < c_c.y or m_c.y >= c_c.y + c_c.height then
-            if table.maxn(m_c.buttons) == 0 then
-                mouse.coords({ x = c_c.x + 5, y = c_c.y + 5})
-            end
-        end
-    end
-    ]]
 end
 
 -- Hook called every second
