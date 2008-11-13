@@ -6,17 +6,17 @@
 font                = Terminus 8
 
 bg_normal           = #000000AA
-fg_normal           = #C4C4C4
+fg_normal           = #EFEFEF
 
-bg_focus            = #1C1C1C
-fg_focus            = #3579A8
+bg_focus            = #000000
+fg_focus            = #FF0033
 
-bg_urgent           = #3579A8AA
+bg_urgent           = #FF0033AA
 fg_urgent           = #EFEFEF
 
 border_width        = 1
 border_normal       = #4C4C4C66
-border_focus        = #3579A866
+border_focus        = #FF003366
 border_marked       = #FF000066
 
 # There are another variables sets
