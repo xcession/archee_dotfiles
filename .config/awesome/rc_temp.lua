@@ -53,7 +53,7 @@ apptags =
 --------------------------------------------------------------------------------
 --{{{ Theme!
 
-theme_path = "/home/%u/.config/awesome/themes/xcession"
+theme_path = "/home/xcession/.config/awesome/themes/xcession"
 
 use_titlebar = false
 
@@ -106,65 +106,68 @@ end
 --{{{ Widgets
 
 -- Create a taglist widget
-mytaglist = widget({ type = "taglist", name = "mytaglist" })
-mytaglist:mouse_add(mouse({}, 1, function (object, tag) awful.tag.viewonly(tag) end))
-mytaglist:mouse_add(mouse({ modkey }, 1, function (object, tag) awful.client.movetotag(tag) end))
-mytaglist:mouse_add(mouse({}, 3, function (object, tag) tag.selected = not tag.selected end))
-mytaglist:mouse_add(mouse({ modkey }, 3, function (object, tag) awful.client.toggletag(tag) end))
-mytaglist:mouse_add(mouse({ }, 4, awful.tag.viewnext))
-mytaglist:mouse_add(mouse({ }, 5, awful.tag.viewprev))
-mytaglist.label = awful.widget.taglist.label.all
+taglist = widget({ type = "taglist", name = "taglist" })
+taglist:mouse_add(mouse({}, 1, function (object, tag) awful.tag.viewonly(tag) end))
+taglist:mouse_add(mouse({ modkey }, 1, function (object, tag) awful.client.movetotag(tag) end))
+taglist:mouse_add(mouse({}, 3, function (object, tag) tag.selected = not tag.selected end))
+taglist:mouse_add(mouse({ modkey }, 3, function (object, tag) awful.client.toggletag(tag) end))
+taglist:mouse_add(mouse({ }, 4, awful.tag.viewnext))
+taglist:mouse_add(mouse({ }, 5, awful.tag.viewprev))
+taglist.label = awful.widget.taglist.label.all
 
 -- Create a tasklist widget
-mytasklist = widget({ type = "tasklist", name = "mytasklist" })
-mytasklist:mouse_add(mouse({ }, 1, function (object, c) client.focus = c; c:raise() end))
-mytasklist:mouse_add(mouse({ }, 4, function () awful.client.focusbyidx(1) end))
-mytasklist:mouse_add(mouse({ }, 5, function () awful.client.focusbyidx(-1) end))
-mytasklist.label = awful.widget.tasklist.label.currenttags
+tasklist = widget({ type = "tasklist", name = "tasklist" })
+tasklist:mouse_add(mouse({ }, 1, function (object, c) client.focus = c; c:raise() end))
+tasklist:mouse_add(mouse({ }, 4, function () awful.client.focusbyidx(1) end))
+tasklist:mouse_add(mouse({ }, 5, function () awful.client.focusbyidx(-1) end))
+tasklist.label = awful.widget.tasklist.label.currenttags
 
 -- Create a textbox widget
-text_datetime = widget({ type = "textbox", name = "text_datetime", align = "right" })
+datetime = widget({ type = "textbox", name = "datetime", align = "right" })
 -- Set the default text in textbox
 -- mytextbox.text = "<b><small> awesome " .. AWESOME_VERSION .. " </small></b>"
-mypromptbox = widget({ type = "textbox", name = "mypromptbox", align = "left" })
+promptbox = widget({ type = "textbox", name = "promptbox", align = "left" })
 
 -- Create an iconbox widget
 -- myiconbox = widget({ type = "textbox", name = "myiconbox", align = "left" })
 -- myiconbox.text = "<bg image=\"/usr/share/awesome/icons/awesome16.png\" resize=\"true\"/>"
 
 -- Create a systray
-mysystray = widget({ type = "systray", name = "mysystray", align = "right" })
+systray = widget({ type = "systray", name = "systray", align = "right" })
 
 -- Create an iconbox widget which will contains an icon indicating which layout we're using.
 -- We need one layoutbox per screen.
-mylayoutbox = {}
+layoutbox = {}
 for s = 1, screen.count() do
-    mylayoutbox[s] = widget({ type = "textbox", name = "mylayoutbox", align = "right" })
-    mylayoutbox[s]:mouse_add(mouse({ }, 1, function () awful.layout.inc(layouts, 1) end))
-    mylayoutbox[s]:mouse_add(mouse({ }, 3, function () awful.layout.inc(layouts, -1) end))
-    mylayoutbox[s]:mouse_add(mouse({ }, 4, function () awful.layout.inc(layouts, 1) end))
-    mylayoutbox[s]:mouse_add(mouse({ }, 5, function () awful.layout.inc(layouts, -1) end))
-    mylayoutbox[s].text = "<bg image=\"/usr/share/awesome/icons/layouts/tilew.png\" resize=\"true\"/>"
+    layoutbox[s] = widget({ type = "textbox", name = "layoutbox", align = "right" })
+    layoutbox[s]:mouse_add(mouse({ }, 1, function () awful.layout.inc(layouts, 1) end))
+    layoutbox[s]:mouse_add(mouse({ }, 3, function () awful.layout.inc(layouts, -1) end))
+    layoutbox[s]:mouse_add(mouse({ }, 4, function () awful.layout.inc(layouts, 1) end))
+    layoutbox[s]:mouse_add(mouse({ }, 5, function () awful.layout.inc(layouts, -1) end))
+    layoutbox[s].text = "<bg image=\"/usr/share/awesome/icons/layouts/tilew.png\" resize=\"true\"/>"
 end
 
 -- Create a statusbar for each screen and add it
-mystatusbar = {}
+statusbar = {}
 for s = 1, screen.count() do
-    mystatusbar[s] = statusbar({ position = "top", name = "mystatusbar" .. s,
+    statusbar[s] = statusbar({ position = "top", name = "statusbar" .. s,
                                  fg = beautiful.fg_normal, bg = beautiful.bg_normal })
     -- Add widgets to the statusbar - order matters
-    mystatusbar[s]:widgets({
-        mytaglist,
-        mytasklist,
+    statusbar[s]:widgets({
+        taglist,
+        tasklist,
         --myiconbox,
-        mypromptbox,
-        text_datetime,
-        mylayoutbox[s],
-        s == 1 and mysystray or nil
+        promptbox,
+        datetime,
+        layoutbox[s],
+        s == 1 and systray or nil
     })
-    mystatusbar[s].screen = s
+    statusbar[s].screen = s
 end
--- }}}
+
+--}}}
+--------------------------------------------------------------------------------
+--{{{ Bindings
 
 -- {{{ Mouse bindings
 awesome.mouse_add(mouse({ }, 3, function () awful.spawn(terminal) end))
