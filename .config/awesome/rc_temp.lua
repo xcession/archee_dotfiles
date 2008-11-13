@@ -396,7 +396,7 @@ function hook_timer ()
     -- mytextbox.text = " " .. os.time() .. " time_t "
     -- Otherwise use:
     datetime.text = " " .. os.date() .. " "
-    battery.text = " " .. get_command_output("battery") .. " "
+    battery.text = " " .. get_command_output("~/battery") .. " "
 
 end
 
