@@ -402,7 +402,7 @@ function hook_timer ()
     -- mytextbox.text = " " .. os.time() .. " time_t "
     -- Otherwise use:
     clockwidget.text = " " .. os.date() .. " "
-    batterystat.text = " " .. get_command_output("~/bin/battstat") .. " "
+    batterystat.text = " " .. get_command_output("~/bin/battery") .. " "
 end
 
 -- Set up some hooks
