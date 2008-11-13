@@ -148,6 +148,7 @@ for s = 1, screen.count() do
         --myiconbox,
         promptbox,
         datetime,
+        battery,
         layoutbox[s],
         s == 1 and systray or nil
     })
