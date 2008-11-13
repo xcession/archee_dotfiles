@@ -110,15 +110,21 @@ tasklist:mouse_add(mouse({ }, 4, function () awful.client.focusbyidx(1) end))
 tasklist:mouse_add(mouse({ }, 5, function () awful.client.focusbyidx(-1) end))
 tasklist.label = awful.widget.tasklist.label.currenttags
 
+-- Create the clock widget
+clockwidget = widget({ type = "textbox", name = "clockwidget", align = "right" })
+
+-- Create the battery widget
+batteryicon = widget({ type = "textbox", name = "batteryicon", align = "right" })
+batteryicon.text = "<bg image=\"" .. os.getenv("HOME") .. "/.config/awesome/icons/battery.png\" resize=\"false\"/>"
+batterystat = widget({ type = "textbox", name = "batterystat", align = "right" })
+
 -- Create a textbox widget
 promptbox = widget({ type = "textbox", name = "promptbox", align = "left" })
-datetime = widget({ type = "textbox", name = "datetime", align = "right" })
-battery = widget({ type = "textbox", name = "battery", align = "right" })
+
 -- Set the default text in textbox
 -- mytextbox.text = "<b><small> awesome " .. AWESOME_VERSION .. " </small></b>"
 
 -- Create an iconbox widget
--- myiconbox = widget({ type = "textbox", name = "myiconbox", align = "left" })
 -- myiconbox.text = "<bg image=\"/usr/share/awesome/icons/awesome16.png\" resize=\"true\"/>"
 
 -- Create a systray
@@ -147,8 +153,9 @@ for s = 1, screen.count() do
         tasklist,
         --myiconbox,
         promptbox,
-        datetime,
-        battery,
+        clockwidget,
+        batteryicon,
+        batterystat,
         layoutbox[s],
         s == 1 and systray or nil
     })
@@ -395,9 +402,8 @@ function hook_timer ()
     -- For unix time_t lovers
     -- mytextbox.text = " " .. os.time() .. " time_t "
     -- Otherwise use:
-    datetime.text = " " .. os.date() .. " "
-    battery.text = " " .. get_command_output("~/battery") .. " "
-
+    clockwidget.text = " " .. os.date() .. " "
+    battery.text = " " .. get_command_output("~/bin/battery") .. " "
 end
 
 -- Set up some hooks
