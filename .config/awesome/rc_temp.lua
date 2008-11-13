@@ -115,7 +115,7 @@ clockwidget = widget({ type = "textbox", name = "clockwidget", align = "right" }
 
 -- Create the battery widget
 batteryicon = widget({ type = "textbox", name = "batteryicon", align = "right" })
-batteryicon.text = "<bg image=\"" .. os.getenv("HOME") .. "/.config/awesome/icons/battery.png\" resize=\"false\"/>"
+batteryicon.text = "<bg image=\"" .. os.getenv("HOME") .. "/.config/awesome/icons/batteryw.png\" resize=\"false\"/>"
 batterystat = widget({ type = "textbox", name = "batterystat", align = "right" })
 
 -- Create a textbox widget
@@ -378,7 +378,7 @@ function hook_arrange(screen)
     if layout then
         layoutbox[screen].text =
             --"<bg image=\"/usr/share/awesome/icons/layouts/" .. awful.layout.get(screen) .. "w.png\" resize=\"true\"/>"
-            "<bg image=\"/home/xcession/.config/awesome/icons/layouts/" .. awful.layout.get(screen) .. "w.png\" resize=\"true\"/>"
+            "<bg image=\"/home/xcession/.config/awesome/icons/layouts/" .. awful.layout.get(screen) .. "w.png\" resize=\"false\"/>"
         else
             layoutbox[screen].text = "No layout."
     end
@@ -403,7 +403,7 @@ function hook_timer ()
     -- mytextbox.text = " " .. os.time() .. " time_t "
     -- Otherwise use:
     clockwidget.text = " " .. os.date() .. " "
-    battery.text = " " .. get_command_output("~/bin/battery") .. " "
+    batterystat.text = " " .. get_command_output("~/bin/battery") .. " "
 end
 
 -- Set up some hooks
