@@ -53,7 +53,7 @@ apptags =
 --------------------------------------------------------------------------------
 --{{{ Theme!
 
-theme_name = "xcession"
+theme_path = "/home/%u/.config/awesome/themes/xcession"
 
 use_titlebar = false
 
@@ -61,8 +61,7 @@ use_titlebar = false
 --------------------------------------------------------------------------------
 --{{{ Register theme (don't change this)
 
---beautiful.init(theme_path)
-beautiful.init(awful.util.getdir("config").."/themes/"..theme_name)
+beautiful.init(theme_path)
 awful.beautiful.register(beautiful)
 
 --}}}
