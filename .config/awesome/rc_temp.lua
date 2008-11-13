@@ -111,10 +111,11 @@ tasklist:mouse_add(mouse({ }, 5, function () awful.client.focusbyidx(-1) end))
 tasklist.label = awful.widget.tasklist.label.currenttags
 
 -- Create a textbox widget
+promptbox = widget({ type = "textbox", name = "promptbox", align = "left" })
 datetime = widget({ type = "textbox", name = "datetime", align = "right" })
+battery = widget({ type = "textbox", name = "battery", align = "right" })
 -- Set the default text in textbox
 -- mytextbox.text = "<b><small> awesome " .. AWESOME_VERSION .. " </small></b>"
-promptbox = widget({ type = "textbox", name = "promptbox", align = "left" })
 
 -- Create an iconbox widget
 -- myiconbox = widget({ type = "textbox", name = "myiconbox", align = "left" })
@@ -207,41 +208,41 @@ for i = 1, keynumber do
                    end):add()
 end
 
-keybinding({ modkey }, "Left", awful.tag.viewprev):add()
-keybinding({ modkey }, "Right", awful.tag.viewnext):add()
-keybinding({ modkey }, "Escape", awful.tag.history.restore):add()
+keybinding({ modkey },              "Left",     awful.tag.viewprev):add()
+keybinding({ modkey },              "Right",    awful.tag.viewnext):add()
+keybinding({ modkey },              "Escape",   awful.tag.history.restore):add()
 
 -- Standard program
-keybinding({ modkey }, "Return", function () awful.spawn(terminal) end):add()
+keybinding({ modkey },              "Return",   function () awful.spawn(terminal) end):add()
 
-keybinding({ modkey, "Control" }, "r", awesome.restart):add()
-keybinding({ modkey, "Shift" }, "q", awesome.quit):add()
+keybinding({ modkey, "Control" },   "r",        awesome.restart):add()
+keybinding({ modkey, "Shift" },     "q",        awesome.quit):add()
 
 -- Client manipulation
-keybinding({ modkey }, "m", awful.client.maximize):add()
-keybinding({ modkey, "Shift" }, "c", function () client.focus:kill() end):add()
-keybinding({ modkey }, "j", function () awful.client.focusbyidx(1); client.focus:raise() end):add()
-keybinding({ modkey }, "k", function () awful.client.focusbyidx(-1);  client.focus:raise() end):add()
-keybinding({ modkey, "Shift" }, "j", function () awful.client.swap(1) end):add()
-keybinding({ modkey, "Shift" }, "k", function () awful.client.swap(-1) end):add()
-keybinding({ modkey, "Control" }, "j", function () awful.screen.focus(1) end):add()
-keybinding({ modkey, "Control" }, "k", function () awful.screen.focus(-1) end):add()
-keybinding({ modkey, "Control" }, "space", awful.client.togglefloating):add()
-keybinding({ modkey, "Control" }, "Return", function () client.focus:swap(awful.client.master()) end):add()
-keybinding({ modkey }, "o", awful.client.movetoscreen):add()
-keybinding({ modkey }, "Tab", awful.client.focus.history.previous):add()
-keybinding({ modkey }, "u", awful.client.urgent.jumpto):add()
-keybinding({ modkey, "Shift" }, "r", function () client.focus:redraw() end):add()
+keybinding({ modkey },              "m",        awful.client.maximize):add()
+keybinding({ modkey, "Shift" },     "c",        function () client.focus:kill() end):add()
+keybinding({ modkey },              "j",        function () awful.client.focusbyidx(1); client.focus:raise() end):add()
+keybinding({ modkey },              "k",        function () awful.client.focusbyidx(-1);  client.focus:raise() end):add()
+keybinding({ modkey, "Shift" },     "j",        function () awful.client.swap(1) end):add()
+keybinding({ modkey, "Shift" },     "k",        function () awful.client.swap(-1) end):add()
+keybinding({ modkey, "Control" },   "j",        function () awful.screen.focus(1) end):add()
+keybinding({ modkey, "Control" },   "k",        function () awful.screen.focus(-1) end):add()
+keybinding({ modkey, "Control" },   "space",    awful.client.togglefloating):add()
+keybinding({ modkey, "Control" },   "Return",   function () client.focus:swap(awful.client.master()) end):add()
+keybinding({ modkey },              "o",        awful.client.movetoscreen):add()
+keybinding({ modkey },              "Tab",      awful.client.focus.history.previous):add()
+keybinding({ modkey },              "u",        awful.client.urgent.jumpto):add()
+keybinding({ modkey, "Shift" },     "r",        function () client.focus:redraw() end):add()
 
 -- Layout manipulation
-keybinding({ modkey }, "l", function () awful.tag.incmwfact(0.05) end):add()
-keybinding({ modkey }, "h", function () awful.tag.incmwfact(-0.05) end):add()
-keybinding({ modkey, "Shift" }, "h", function () awful.tag.incnmaster(1) end):add()
-keybinding({ modkey, "Shift" }, "l", function () awful.tag.incnmaster(-1) end):add()
-keybinding({ modkey, "Control" }, "h", function () awful.tag.incncol(1) end):add()
-keybinding({ modkey, "Control" }, "l", function () awful.tag.incncol(-1) end):add()
-keybinding({ modkey }, "space", function () awful.layout.inc(layouts, 1) end):add()
-keybinding({ modkey, "Shift" }, "space", function () awful.layout.inc(layouts, -1) end):add()
+keybinding({ modkey },              "l",        function () awful.tag.incmwfact(0.05) end):add()
+keybinding({ modkey },              "h",        function () awful.tag.incmwfact(-0.05) end):add()
+keybinding({ modkey, "Shift" },     "h",        function () awful.tag.incnmaster(1) end):add()
+keybinding({ modkey, "Shift" },     "l",        function () awful.tag.incnmaster(-1) end):add()
+keybinding({ modkey, "Control" },   "h",        function () awful.tag.incncol(1) end):add()
+keybinding({ modkey, "Control" },   "l",        function () awful.tag.incncol(-1) end):add()
+keybinding({ modkey },              "space",    function () awful.layout.inc(layouts, 1) end):add()
+keybinding({ modkey, "Shift" },     "space",    function () awful.layout.inc(layouts, -1) end):add()
 
 -- Prompt
 keybinding({ modkey }, "F1", function ()
@@ -381,12 +382,21 @@ function hook_arrange(screen)
     end
 end
 
+function get_command_output (command)
+    local c = io.popen(command)
+    local output = {}
+    i = 0
+    return c:read("*line")
+end
+
 -- Hook called every second
 function hook_timer ()
     -- For unix time_t lovers
     -- mytextbox.text = " " .. os.time() .. " time_t "
     -- Otherwise use:
     datetime.text = " " .. os.date() .. " "
+    battery.text = " " .. get_command_output("battery") .. " "
+
 end
 
 -- Set up some hooks
