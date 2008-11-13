@@ -8,7 +8,7 @@ font                = Terminus 8
 bg_normal           = #000000AA
 fg_normal           = #C4C4C4
 
-bg_focus            = #1C1C1CAA
+bg_focus            = #1C1C1C
 fg_focus            = #3579A8
 
 bg_urgent           = #3579A8AA
