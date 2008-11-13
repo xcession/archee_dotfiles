@@ -150,7 +150,7 @@ end
 -- Create a statusbar for each screen and add it
 statusbar = {}
 for s = 1, screen.count() do
-    statusbar[s] = statusbar({ position = "top", name = "statusbar" .. s,
+    statusbar[s] = statbar({ position = "top", name = "statusbar" .. s,
                                  fg = beautiful.fg_normal, bg = beautiful.bg_normal })
     -- Add widgets to the statusbar - order matters
     statusbar[s]:widgets({
