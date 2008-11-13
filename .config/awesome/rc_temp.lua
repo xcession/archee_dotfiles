@@ -132,7 +132,7 @@ for s = 1, screen.count() do
     layoutbox[s]:mouse_add(mouse({ }, 3, function () awful.layout.inc(layouts, -1) end))
     layoutbox[s]:mouse_add(mouse({ }, 4, function () awful.layout.inc(layouts, 1) end))
     layoutbox[s]:mouse_add(mouse({ }, 5, function () awful.layout.inc(layouts, -1) end))
-    layoutbox[s].text = "<bg image=\"/usr/share/awesome/icons/layouts/tilew.png\" resize=\"true\"/>"
+    --layoutbox[s].text = "<bg image=\"/usr/share/awesome/icons/layouts/tilew.png\" resize=\"true\"/>"
 end
 
 -- Create a statusbar for each screen and add it
@@ -245,24 +245,24 @@ keybinding({ modkey, "Shift" }, "space", function () awful.layout.inc(layouts, -
 
 -- Prompt
 keybinding({ modkey }, "F1", function ()
-                                 awful.prompt.run({ prompt = "Run: " }, mypromptbox, awful.spawn, awful.completion.bash,
+                                 awful.prompt.run({ prompt = "Run: " }, promptbox, awful.spawn, awful.completion.bash,
 os.getenv("HOME") .. "/.cache/awesome/history") end):add()
 keybinding({ modkey }, "F4", function ()
-                                 awful.prompt.run({ prompt = "Run Lua code: " }, mypromptbox, awful.eval, awful.prompt.bash,
+                                 awful.prompt.run({ prompt = "Run Lua code: " }, promptbox, awful.eval, awful.prompt.bash,
 os.getenv("HOME") .. "/.cache/awesome/history_eval") end):add()
 keybinding({ modkey, "Ctrl" }, "i", function ()
-                                        if mypromptbox.text then
-                                            mypromptbox.text = nil
+                                        if promptbox.text then
+                                            promptbox.text = nil
                                         else
-                                            mypromptbox.text = nil
+                                            promptbox.text = nil
                                             if client.focus.class then
-                                                mypromptbox.text = "Class: " .. client.focus.class .. " "
+                                                promptbox.text = "Class: " .. client.focus.class .. " "
                                             end
                                             if client.focus.instance then
-                                                mypromptbox.text = mypromptbox.text .. "Instance: ".. client.focus.instance .. " "
+                                                promptbox.text = promptbox.text .. "Instance: ".. client.focus.instance .. " "
                                             end
                                             if client.focus.role then
-                                                mypromptbox.text = mypromptbox.text .. "Role: ".. client.focus.role
+                                                promptbox.text = promptbox.text .. "Role: ".. client.focus.role
                                             end
                                         end
                                     end):add()
@@ -278,9 +278,11 @@ for i = 1, keynumber do
                        end
                    end):add()
 end
--- }}}
 
--- {{{ Hooks
+--}}}
+--------------------------------------------------------------------------------
+--{{{ Hooks
+
 -- Hook function to execute when focusing a client.
 function hook_focus(c)
     if not awful.client.ismarked(c) then
@@ -365,10 +367,11 @@ end
 function hook_arrange(screen)
     local layout = awful.layout.get(screen)
     if layout then
-        mylayoutbox[screen].text =
-            "<bg image=\"/usr/share/awesome/icons/layouts/" .. awful.layout.get(screen) .. "w.png\" resize=\"true\"/>"
+        layoutbox[screen].text =
+            --"<bg image=\"/usr/share/awesome/icons/layouts/" .. awful.layout.get(screen) .. "w.png\" resize=\"true\"/>"
+            "<bg image=\"/home/xcession/.config/awesome/icons/layouts/" .. awful.layout.get(screen) .. "w.png\" resize=\"true\"/>"
         else
-            mylayoutbox[screen].text = "No layout."
+            layoutbox[screen].text = "No layout."
     end
 
     -- If no window has focus, give focus to the latest in history
@@ -383,7 +386,7 @@ function hook_timer ()
     -- For unix time_t lovers
     -- mytextbox.text = " " .. os.time() .. " time_t "
     -- Otherwise use:
-    text_datetime.text = " " .. os.date() .. " "
+    datetime.text = " " .. os.date() .. " "
 end
 
 -- Set up some hooks
