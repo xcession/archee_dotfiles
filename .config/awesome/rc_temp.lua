@@ -69,31 +69,19 @@ awful.beautiful.register(beautiful)
 --{{{ Tags
 
 tags = {}
---[[for s = 1, screen.count() do
-    -- Each screen has its own tag table.
-    tags[s] = {}
-    -- Create 9 tags per screen.
-    for tagnumber = 1, 6 do
-        tags[s][tagnumber] = tag({ name = tagnumber, layout = layouts[1] })
-        -- Add tags to screen one by one
-        tags[s][tagnumber].screen = s
-    end
-    -- I'm sure you want to see at least one tag.
-    tags[s][1].selected = true
-end]]
 for s = 1, screen.count() do
     tags[s] = {}
     -- Give the first 3 tag special names
-    tags[s][1] = tag({ name = "1-term", layout = layouts[1], mwfact = 0.618033988769 })
-    tags[s][2] = tag({ name = "2-web", layout = layouts[1] })
-    tags[s][3] = tag({ name = "3-dev", layout = layouts[4], mwfact = 0.15 })
+    tags[s][1] = tag({ name = "1-term", layout = defaultLayout })
+    tags[s][2] = tag({ name = "2-web", layout = defaultLayout })
+    tags[s][3] = tag({ name = "3-dev", layout = defaultLayout })
     -- Put them on the screen
     for tagnumber = 1, 3 do
         tags[s][tagnumber].screen = s
     end
     -- Automatically name the next 6 tags after their tag number and put them on the screen
-    for tagnumber = 4, 9 do
-        tags[s][tagnumber] = tag({ name = tagnumber, layout = layouts[1] })
+    for tagnumber = 4, 6 do
+        tags[s][tagnumber] = tag({ name = tagnumber, layout = defaultLayout })
         tags[s][tagnumber].screen = s
     end
     -- Select at least one tag
@@ -148,12 +136,12 @@ for s = 1, screen.count() do
 end
 
 -- Create a statusbar for each screen and add it
-statusbar = {}
+statbar = {}
 for s = 1, screen.count() do
-    statusbar[s] = statbar({ position = "top", name = "statusbar" .. s,
+    statbar[s] = statusbar({ position = "top", name = "statbar" .. s,
                                  fg = beautiful.fg_normal, bg = beautiful.bg_normal })
     -- Add widgets to the statusbar - order matters
-    statusbar[s]:widgets({
+    statbar[s]:widgets({
         taglist,
         tasklist,
         --myiconbox,
@@ -162,7 +150,7 @@ for s = 1, screen.count() do
         layoutbox[s],
         s == 1 and systray or nil
     })
-    statusbar[s].screen = s
+    statbar[s].screen = s
 end
 
 --}}}
