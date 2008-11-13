@@ -70,8 +70,8 @@ awful.beautiful.register(beautiful)
 --------------------------------------------------------------------------------
 --{{{ Tags
 
---[[tags = {}
-for s = 1, screen.count() do
+tags = {}
+--[[for s = 1, screen.count() do
     -- Each screen has its own tag table.
     tags[s] = {}
     -- Create 9 tags per screen.
