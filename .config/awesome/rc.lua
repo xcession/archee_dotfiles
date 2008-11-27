@@ -1,5 +1,5 @@
 --[[ awesome 3 configuration file by xcession
-     last update: 13/11/08                    ]]
+     last update: 27/11/08                    ]]
 
 --------------------------------------------------------------------------------
 --{{{ Imports
@@ -36,7 +36,6 @@ floatapps =
     -- by class
     ["MPlayer"]     = true,
     ["Gimp"]        = true,
-    ["Mirage"]      = true,
     -- by instance
     ["mocp"]        = true
 }
@@ -73,13 +72,12 @@ for s = 1, screen.count() do
     -- Give the first 3 tag special names
     tags[s][1] = tag({ name = "1-term", layout = defaultLayout })
     tags[s][2] = tag({ name = "2-web", layout = defaultLayout })
-    tags[s][3] = tag({ name = "3-dev", layout = defaultLayout })
     -- Put them on the screen
-    for tagnumber = 1, 3 do
+    for tagnumber = 1, 2 do
         tags[s][tagnumber].screen = s
     end
     -- Automatically name the next 6 tags after their tag number and put them on the screen
-    for tagnumber = 4, 6 do
+    for tagnumber = 3, 6 do
         tags[s][tagnumber] = tag({ name = tagnumber, layout = defaultLayout })
         tags[s][tagnumber].screen = s
     end
