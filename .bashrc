@@ -16,7 +16,7 @@ alias abs="sudo abs"
 alias shutdown="sudo shutdown -hP -t 0 now"
 alias reboot="sudo reboot"
 alias nitrogen="nitrogen ~/wallpapers"
-alias clean="sudo pacman -Qdt && sudo pacman -Scc"
+alias clean="sudo pacman -Qdt && sudo pacman -Scc && sudo updatedb"
 alias df="df -h"
 
 # bash prompt styles
