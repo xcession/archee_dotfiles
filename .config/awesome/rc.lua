@@ -121,7 +121,7 @@ wi_clock = widget({ type = "textbox", align = "right" })
 
 -- Create a battery widget
 wi_batt_icon = widget({ type = "imagebox", align = "right" })
-wi_batt_icon.image = ("" .. os.getenv("HOME") .. "/.config/awesome/icons/batteryw.png")
+wi_batt_icon.image = image("" .. os.getenv("HOME") .. "/.config/awesome/icons/batteryw.png")
 wi_batt_stat = widget({ type = "textbox", align = "right" })
 
 -- Create a wibox for each screen and add it
