@@ -1,5 +1,5 @@
---[[ awesome 3 configuration file by xcession
-     last update: 20/12/08                    ]]
+-- awesome 3.1 configuration file by xcession
+-- last update: 20/12/08
 
 --------------------------------------------------------------------------------
 --{{{ Imports
@@ -10,24 +10,46 @@ require("beautiful")
 
 --}}}
 --------------------------------------------------------------------------------
+--{{{ Theme!
+
+theme_name = "xcession"
+
+use_titlebar = false
+
+--}}}
+--------------------------------------------------------------------------------
+--{{{ Register theme (don't change this)
+
+beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name)
+
+--}}}
+--------------------------------------------------------------------------------
 --{{{ Variables
 
+-- This is used later as the default terminal and editor to run
 terminal = "urxvt"
+editor = os.getenv("EDITOR") or "vi"
+editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey
 modkey = "Mod4"
 
 -- The layouts
-layouts     = { "tile"
-              , "tileleft"
-              --, "tilebottom"
-              --, "tiletop"
-              --, "fairh"
-              --, "fairv"
-              --, "magnifier"
-              , "max"
-              , "floating"
-              }
+layouts =
+{
+    "tile",
+    "tileleft",
+    -- "tilebottom",
+    -- "tiletop",
+    -- "fairh",
+    -- "fairv",
+    -- "magnifier",
+    "max",
+    "fullscreen",
+    -- "spiral",
+    -- "dwindle",
+    "floating"
+}
 
 defaultLayout = layouts[3]
 
@@ -50,29 +72,14 @@ apptags =
 
 --}}}
 --------------------------------------------------------------------------------
---{{{ Theme!
-
-theme_name = "xcession"
-
-use_titlebar = false
-
---}}}
---------------------------------------------------------------------------------
---{{{ Register theme (don't change this)
-
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name)
-awful.beautiful.register(beautiful)
-
---}}}
---------------------------------------------------------------------------------
---{{{ Tags
+-- {{{ Tags
 
 tags = {}
 for s = 1, screen.count() do
     tags[s] = {}
     -- Give the first 3 tag special names
-    tags[s][1] = tag({ name = "1", layout = defaultLayout })
-    tags[s][2] = tag({ name = "2", layout = defaultLayout })
+    tags[s][1] = tag({ name = "1-term", layout = defaultLayout })
+    tags[s][2] = tag({ name = "2-web", layout = defaultLayout })
     -- Put them on the screen
     for tagnumber = 1, 2 do
         tags[s][tagnumber].screen = s
@@ -85,38 +92,38 @@ for s = 1, screen.count() do
     -- Select at least one tag
     tags[s][1].selected = true
 end
--- }}}
 
---}}}
+-- }}}
 --------------------------------------------------------------------------------
---{{{ Wibox
--- Create a textbox widget
+-- {{{ Wibox
+
+-- Create a version widget
 wi_version = widget({ type = "textbox", align = "right" })
--- Set the default text in textbox
 wi_version.text = "<b><small> " .. AWESOME_RELEASE .. " </small></b>"
 
 -- Create a laucher widget and a main menu
-myawesomemenu = {
+wi_menu = {
    { "manual", terminal .. " -e man awesome" },
+   { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
    { "restart", awesome.restart },
    { "quit", awesome.quit }
 }
 
-mymainmenu = awful.menu.new({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+mainmenu = awful.menu.new({ items = { { "awesome", wi_menu, beautiful.awesome_icon },
                                         { "open terminal", terminal }
                                       }
                             })
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+wi_launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                     menu = mainmenu })
 
 -- Create a systray
 mysystray = widget({ type = "systray", align = "right" })
 
--- Create the clock widget
+-- Create a clock widget
 wi_clock = widget({ type = "textbox", align = "right" })
 
--- Create the battery widget
+-- Create a battery widget
 wi_batt_icon = widget({ type = "textbox", align = "right" })
 wi_batt_icon.text = "<bg image=\"" .. os.getenv("HOME") .. "/.config/awesome/icons/batteryw.png\" resize=\"false\"/>"
 wi_batt_stat = widget({ type = "textbox", align = "right" })
@@ -159,7 +166,7 @@ for s = 1, screen.count() do
     -- Create the wibox
     mywibox[s] = wibox({ position = "top", fg = beautiful.fg_normal, bg = beautiful.bg_normal })
     -- Add widgets to the wibox - order matters
-    mywibox[s].widgets = { mylauncher,
+    mywibox[s].widgets = { wi_launcher,
                            mytaglist[s],
                            mytasklist[s],
                            mypromptbox[s],
@@ -170,16 +177,6 @@ for s = 1, screen.count() do
                            mylayoutbox[s],
                            s == 1 and mysystray or nil }
     mywibox[s].screen = s
-end
-
-layoutbox = {}
-for s = 1, screen.count() do
-    layoutbox[s] = widget({ type = "textbox", name = "layoutbox", align = "right" })
-    layoutbox[s]:mouse_add(mouse({ }, 1, function () awful.layout.inc(layouts, 1) end))
-    layoutbox[s]:mouse_add(mouse({ }, 3, function () awful.layout.inc(layouts, -1) end))
-    layoutbox[s]:mouse_add(mouse({ }, 4, function () awful.layout.inc(layouts, 1) end))
-    layoutbox[s]:mouse_add(mouse({ }, 5, function () awful.layout.inc(layouts, -1) end))
-    --layoutbox[s].text = "<bg image=\"/usr/share/awesome/icons/layouts/tilew.png\" resize=\"true\"/>"
 end
 
 --}}}
@@ -342,12 +339,12 @@ awful.hooks.marked.register(function (c)
     c.border_color = beautiful.border_marked
 end)
 
--- Hook function to execute when unmarking a client
+-- Hook function to execute when unmarking a client.
 awful.hooks.unmarked.register(function (c)
     c.border_color = beautiful.border_focus
 end)
 
--- Hook function to execute when the mouse is over a client.
+-- Hook function to execute when the mouse enters a client.
 awful.hooks.mouse_enter.register(function (c)
     -- Sloppy focus, but disabled for magnifier layout
     if awful.layout.get(c.screen) ~= "magnifier"
@@ -439,12 +436,12 @@ awful.hooks.arrange.register(function (screen)
 end)
 
 -- Hook called every second
-function hook_timer ()
+awful.hooks.timer.register(1, function ()
     -- For unix time_t lovers
     -- mytextbox.text = " " .. os.time() .. " time_t "
     -- Otherwise use:
     wi_clock.text = " " .. os.date() .. " "
     wi_batt_stat.text = " " .. get_command_output("~/bin/battstat") .. " "
-end
+end)
 
 -- }}}
