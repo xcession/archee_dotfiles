@@ -430,6 +430,13 @@ awful.hooks.arrange.register(function (screen)
     ]]
 end)
 
+function get_command_output (command)
+    local c = io.popen(command)
+    local output = {}
+    i = 0
+    return c:read("*line")
+end
+
 -- Hook called every second
 awful.hooks.timer.register(1, function ()
     -- For unix time_t lovers
