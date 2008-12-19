@@ -78,8 +78,8 @@ tags = {}
 for s = 1, screen.count() do
     tags[s] = {}
     -- Give the first 3 tag special names
-    tags[s][1] = tag({ name = "1-term", layout = defaultLayout })
-    tags[s][2] = tag({ name = "2-web", layout = defaultLayout })
+    tags[s][1] = tag({ name = "1", layout = defaultLayout })
+    tags[s][2] = tag({ name = "2", layout = defaultLayout })
     -- Put them on the screen
     for tagnumber = 1, 2 do
         tags[s][tagnumber].screen = s
@@ -110,18 +110,15 @@ wi_mainmenu = awful.menu.new({ items = { { "awesome", wi_menu, beautiful.awesome
                                       }
                             })
 
-wi_launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = wi_mainmenu })
+wi_launcher = awful.widget.launcher({menu = wi_mainmenu })
 
 -- Create a systray
-mysystray = widget({ type = "systray", align = "right" })
+wi_systray = widget({ type = "systray", align = "right" })
 
 -- Create a clock widget
 wi_clock = widget({ type = "textbox", align = "right" })
 
 -- Create a battery widget
-wi_batt_icon = widget({ type = "imagebox", align = "right" })
-wi_batt_icon.image = image("" .. os.getenv("HOME") .. "/.config/awesome/icons/batteryw.png")
 wi_batt_stat = widget({ type = "textbox", align = "right" })
 
 -- Create a wibox for each screen and add it
@@ -146,7 +143,7 @@ for s = 1, screen.count() do
     mypromptbox[s] = widget({ type = "textbox", align = "left" })
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-    mylayoutbox[s] = widget({ type = "imagebox", align = "right" })
+    mylayoutbox[s] = widget({ type = "textbox", align = "right" })
     mylayoutbox[s]:buttons({ button({ }, 1, function () awful.layout.inc(layouts, 1) end),
                              button({ }, 3, function () awful.layout.inc(layouts, -1) end),
                              button({ }, 4, function () awful.layout.inc(layouts, 1) end),
@@ -167,10 +164,9 @@ for s = 1, screen.count() do
                            mytasklist[s],
                            mypromptbox[s],
                            wi_clock,
-                           wi_batt_icon,
                            wi_batt_stat,
                            mylayoutbox[s],
-                           s == 1 and mysystray or nil }
+                           s == 1 and wi_systray or nil}
     mywibox[s].screen = s
 end
 
@@ -180,7 +176,7 @@ end
 
 -- {{{ Mouse bindings
 awesome.buttons({
-    button({ }, 3, function () mymainmenu:toggle() end),
+    button({ }, 3, function () wi_mainmenu:toggle() end),
     button({ }, 4, awful.tag.viewnext),
     button({ }, 5, awful.tag.viewprev)
 })
@@ -402,8 +398,7 @@ end)
 awful.hooks.arrange.register(function (screen)
     local layout = awful.layout.get(screen)
     if layout then
-        -- mylayoutbox[screen].image = image(beautiful["layout_" .. layout])
-        mylayoutbox[screen].image = image("" .. os.getenv("HOME") .. "/.config/awesome/icons/layouts/" .. layout .. "w.png")
+        mylayoutbox[screen].text = " " .. awful.layout.get(screen) .. " "
     else
         mylayoutbox[screen].image = nil
     end
@@ -438,13 +433,15 @@ function get_command_output (command)
     return c:read("*line")
 end
 
--- Hook called every second
+-- Timed hooks for the widget functions
+-- 1 second
 awful.hooks.timer.register(1, function ()
-    -- For unix time_t lovers
-    -- mytextbox.text = " " .. os.time() .. " time_t "
-    -- Otherwise use:
-    wi_clock.text = " " .. os.date() .. " "
-    wi_batt_stat.text = " " .. get_command_output("~/bin/battstat") .. " "
+    wi_clock.text = " " .. os.date() .. " <span color=\"" .. beautiful.fg_focus .. "\">|</span>"
+end)
+
+-- 20 seconds
+awful.hooks.timer.register(20, function ()
+    wi_batt_stat.text = " Battery: " .. get_command_output("~/bin/battstat") .. " <span color=\"" .. beautiful.fg_focus .. "\">|</span>"
 end)
 
 -- }}}
