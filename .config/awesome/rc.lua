@@ -97,10 +97,6 @@ end
 --------------------------------------------------------------------------------
 -- {{{ Wibox
 
--- Create a version widget
-wi_version = widget({ type = "textbox", align = "right" })
-wi_version.text = "<b><small> " .. AWESOME_RELEASE .. " </small></b>"
-
 -- Create a laucher widget and a main menu
 wi_menu = {
    { "manual", terminal .. " -e man awesome" },
@@ -109,13 +105,13 @@ wi_menu = {
    { "quit", awesome.quit }
 }
 
-mainmenu = awful.menu.new({ items = { { "awesome", wi_menu, beautiful.awesome_icon },
+wi_mainmenu = awful.menu.new({ items = { { "awesome", wi_menu, beautiful.awesome_icon },
                                         { "open terminal", terminal }
                                       }
                             })
 
 wi_launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mainmenu })
+                                     menu = wi_mainmenu })
 
 -- Create a systray
 mysystray = widget({ type = "systray", align = "right" })
@@ -173,7 +169,6 @@ for s = 1, screen.count() do
                            wi_clock,
                            wi_batt_icon,
                            wi_batt_stat,
-                           wi_version,
                            mylayoutbox[s],
                            s == 1 and mysystray or nil }
     mywibox[s].screen = s
