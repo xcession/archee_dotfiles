@@ -139,13 +139,16 @@ for s = 1, screen.count() do
     --layoutbox[s].text = "<bg image=\"/usr/share/awesome/icons/layouts/tilew.png\" resize=\"true\"/>"
 end
 
--- Create a statusbar for each screen and add it
+-- Create a statusbar (called wibox), and set its properties
 statbar = {}
 for s = 1, screen.count() do
-    statbar[s] = statusbar({ position = "top", name = "statbar" .. s,
-                                 fg = beautiful.fg_normal, bg = beautiful.bg_normal })
+    statbar[s] = wibox({ position = "top",
+                            name = "statbar" .. s,
+                            fg = beautiful.fg_normal,
+                            bg = beautiful.bg_normal
+                      })
     -- Add widgets to the statusbar - order matters
-    statbar[s]:widgets({
+    statbar[s].widgets = {
         taglist,
         tasklist,
         --myiconbox,
@@ -155,7 +158,7 @@ for s = 1, screen.count() do
         batterystat,
         layoutbox[s],
         s == 1 and systray or nil
-    })
+    }
     statbar[s].screen = s
 end
 
