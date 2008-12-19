@@ -120,8 +120,8 @@ mysystray = widget({ type = "systray", align = "right" })
 wi_clock = widget({ type = "textbox", align = "right" })
 
 -- Create a battery widget
-wi_batt_icon = widget({ type = "textbox", align = "right" })
-wi_batt_icon.text = "<bg image=\"" .. os.getenv("HOME") .. "/.config/awesome/icons/batteryw.png\" resize=\"false\"/>"
+wi_batt_icon = widget({ type = "imagebox", align = "right" })
+wi_batt_icon.image = ("" .. os.getenv("HOME") .. "/.config/awesome/icons/batteryw.png")
 wi_batt_stat = widget({ type = "textbox", align = "right" })
 
 -- Create a wibox for each screen and add it
@@ -402,7 +402,8 @@ end)
 awful.hooks.arrange.register(function (screen)
     local layout = awful.layout.get(screen)
     if layout then
-        mylayoutbox[screen].image = image(beautiful["layout_" .. layout])
+        -- mylayoutbox[screen].image = image(beautiful["layout_" .. layout])
+        mylayoutbox[screen].image = image("" .. os.getenv("HOME") .. "/.config/awesome/icons/layouts/" .. layout .. "w.png")
     else
         mylayoutbox[screen].image = nil
     end
