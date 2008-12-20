@@ -19,12 +19,12 @@ border_normal       = #4C4C4C66
 border_focus        = #FF003366
 border_marked       = #FF000066
 
-taglist_squares_sel       = "/usr/share/awesome/themes/default/taglist/squarefw.png"
-taglist_squares_unsel     = "/usr/share/awesome/themes/default/taglist/squarew.png"
-tasklist_floating_icon    = "/usr/share/awesome/themes/default/tasklist/floatingw.png"
-awesome_icon              = "/usr/share/awesome/icons/awesome16.png"
+taglist_squares_sel       = os.getenv("HOME") .. "/.config/awesome/taglist/squarefw.png"
+taglist_squares_unsel     = os.getenv("HOME") .. "/.config/awesome/taglist/squarew.png"
+tasklist_floating_icon    = os.getenv("HOME") .. "/.config/awesome/tasklist/floatingw.png"
+awesome_icon              = os.getenv("HOME") .. "/.config/awesome/icons/awesome16.png"
 
-menu_submenu_icon         = awful.util.getdir("config").."/icons/submenu.png"
+menu_submenu_icon         = os.getenv("HOME") .. "/.config/awesome/icons/submenu.png"
 
 taglist_squares = true
 titlebar_close_button = true
