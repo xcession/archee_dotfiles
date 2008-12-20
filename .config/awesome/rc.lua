@@ -112,8 +112,6 @@ mainmenu = awful.menu.new({ items = {
 -------------------------------------------------------------------------------------
 --{{{ Widgets
 
-wi_launcher = awful.widget.launcher({menu = mainmenu })
-
 -- Create a systray
 wi_systray = widget({ type = "systray", align = "right" })
 
@@ -161,8 +159,7 @@ for s = 1, screen.count() do
     -- Create the wibox
     mywibox[s] = wibox({ position = "top", fg = beautiful.fg_normal, bg = beautiful.bg_normal })
     -- Add widgets to the wibox - order matters
-    mywibox[s].widgets = { wi_launcher,
-                           mytaglist[s],
+    mywibox[s].widgets = { mytaglist[s],
                            mytasklist[s],
                            mypromptbox[s],
                            wi_clock,
