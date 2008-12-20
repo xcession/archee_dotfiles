@@ -1,0 +1,49 @@
+-------------------------------------------------------------------------------------
+--{{{ Functions
+
+---- Widget functions
+-- Battery
+function batteryInfo(adapter)
+    local fcur = io.open("/sys/class/power_supply/" .. adapter .. "/charge_now")    
+    local fcap = io.open("/sys/class/power_supply/" .. adapter .. "/charge_full")
+    local fsta = io.open("/sys/class/power_supply/" .. adapter .. "/status")
+    local cur = fcur:read()
+    fcur:close()
+    local cap = fcap:read()
+    fcap:close()
+    local sta = fsta:read()
+    fsta:close()
+    
+    local battery = math.floor(cur * 100 / cap)
+    
+    if sta:match("Charging") then
+        dir = "^"
+        battery = "A/C (" .. battery .. ")"
+    elseif sta:match("Discharging") then
+        dir = "v"
+        if tonumber(battery) >= 25 and tonumber(battery) <= 50 then
+            battery = setFg("#e6d51d", battery)
+        elseif tonumber(battery) < 25 then
+            if tonumber(battery) <= 10 then
+                naughty.notify({
+                                    title    = "Battery Warning",
+                                    text     = "Battery low! " .. battery .. "% left!",
+                                    timeout  = 5,
+                                    position = "top_right",
+                                    fg       = beautiful.fg_focus,
+                                    bg       = beautiful.bg_focus
+                               })
+            end
+            battery = setFg("#ff6565", battery)
+        else
+            battery = battery
+        end
+    else
+        dir = "="
+        battery = "A/C"
+    end
+    
+    batterywidget.text = " " .. setFg(beautiful.fg_focus, "Bat:") .. " " .. dir .. battery .. dir .. " "
+end
+
+--}}}

@@ -18,6 +18,12 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme")
 use_titlebar = false
 
 --}}}
+-------------------------------------------------------------------------------------
+--{{{ Load functions
+
+loadfile(os.getenv("HOME") .. "/.config/awesome/functions.lua")()
+
+--}}}
 --------------------------------------------------------------------------------
 --{{{ Variables
 
@@ -108,17 +114,15 @@ end
 -------------------------------------------------------------------------------------
 --{{{ Widgets
 
-wi_launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                      menu = mainmenu })
-
 -- Create a systray
-wi_systray = widget({ type = "systray", align = "right" })
+systray = widget({ type = "systray", align = "right" })
 
 -- Create a clock widget
-wi_clock = widget({ type = "textbox", align = "right" })
+clockwidget = widget({ type = "textbox", align = "right" })
 
 -- Create a battery widget
-wi_batt_stat = widget({ type = "textbox", align = "right" })
+batterywidget = widget({ type = "textbox", align = "right" })
+batteryInfo("BAT0")
 
 -- Create a wibox for each screen and add it
 statusbar = {}
@@ -160,19 +164,18 @@ for s = 1, screen.count() do
         position = "top",
         height = "16",
         fg = beautiful.fg_normal,
-        bg = beautiful.bg_normal, 
-        border_color = beautiful.border_normal, 
-        border_width = beautiful.border_width
+        bg = beautiful.bg_normal
     })
     -- Add widgets to the wibox - order matters
-    statusbar[s].widgets = { wi_launcher,
-                           mytaglist[s],
-                           mytasklist[s],
-                           mypromptbox[s],
-                           wi_clock,
-                           wi_batt_stat,
-                           mylayoutbox[s],
-                           s == 1 and wi_systray or nil}
+    statusbar[s].widgets = {
+                                mytaglist[s],
+                                mytasklist[s],
+                                mypromptbox[s],
+                                clockwidget,
+                                wi_batt_stat,
+                                mylayoutbox[s],
+                                s == 1 and systray or nil
+                            }
     statusbar[s].screen = s
 end
 
@@ -432,22 +435,23 @@ awful.hooks.arrange.register(function (screen)
     ]]
 end)
 
-function get_command_output (command)
-    local c = io.popen(command)
-    local output = {}
-    i = 0
-    return c:read("*line")
-end
+--function get_command_output (command)
+--    local c = io.popen(command)
+--    local output = {}
+--    i = 0
+--    return c:read("*line")
+--end
 
 -- Timed hooks for the widget functions
 -- 1 second
 awful.hooks.timer.register(1, function ()
-    wi_clock.text = " " .. os.date() .. " <span color=\"" .. beautiful.fg_focus .. "\">|</span>"
+    clockwidget.text = " " .. os.date() .. " "
 end)
 
 -- 20 seconds
 awful.hooks.timer.register(20, function ()
-    wi_batt_stat.text = " Battery: " .. get_command_output("~/bin/battstat") .. " <span color=\"" .. beautiful.fg_focus .. "\">|</span>"
+    -- wi_batt_stat.text = " Battery: " .. get_command_output("~/bin/battstat") .. " "
+    batteryInfo("BAT0")
 end)
 
 -- }}}
