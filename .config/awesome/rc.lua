@@ -172,7 +172,7 @@ for s = 1, screen.count() do
                                 mytasklist[s],
                                 mypromptbox[s],
                                 clockwidget,
-                                wi_batt_stat,
+                                batterywidget,
                                 mylayoutbox[s],
                                 s == 1 and systray or nil
                             }

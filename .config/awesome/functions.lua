@@ -3,19 +3,19 @@
 
 ---- Markup functions
 function setBg(color, text)
-    return '<bg color="'..color..'" />'..text
+    return '<bg color="' .. color .. '" />' .. text
 end
 
 function setFg(color, text)
-    return '<span color="'..color..'">'..text..'</span>'
+    return '<span color="' .. color .. '">' .. text .. '</span>'
 end
 
 function setBgFg(bgcolor, fgcolor, text)
-    return '<bg color="'..bgcolor..'" /><span color="'..fgcolor..'">'..text..'</span>'
+    return '<bg color="' .. bgcolor .. '" /><span color="' .. fgcolor .. '">' .. text .. '</span>'
 end
 
 function setFont(font, text)
-    return '<span font_desc="'..font..'">'..text..'</span>'
+    return '<span font_desc="' .. font .. '">' .. text .. '</span>'
 end
 
 ---- Widget functions
