@@ -35,7 +35,7 @@ function batteryInfo(adapter)
     
     if sta:match("Charging") then
         dir = "^"
-        battery = "A/C (" .. battery .. "%)"
+        battery = "A/C " .. battery
     elseif sta:match("Discharging") then
         dir = "v"
         if tonumber(battery) >= 25 and tonumber(battery) <= 50 then
@@ -60,7 +60,7 @@ function batteryInfo(adapter)
         battery = "A/C"
     end
     
-    batterywidget.text = " Battery: " .. dir .. battery .. dir .. " "
+    batterywidget.text = " Battery: " .. dir .. battery .. "%" .. dir .. " "
 end
 
 --}}}
