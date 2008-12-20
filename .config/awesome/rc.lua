@@ -14,13 +14,8 @@ require("naughty")
 --------------------------------------------------------------------------------
 --{{{ Theme!
 
-use_titlebar = false
-
---}}}
---------------------------------------------------------------------------------
---{{{ Register theme (don't change this)
-
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme")
+use_titlebar = false
 
 --}}}
 --------------------------------------------------------------------------------
@@ -70,14 +65,32 @@ apptags =
 
 --}}}
 --------------------------------------------------------------------------------
+--{{{ Menu
+-- Popup menu when we rightclick the desktop
+
+-- Submenu
+awesomemenu = {
+    { "restart", awesome.restart },
+    { "quit", awesome.quit }
+}
+-- Main menu
+mainmenu = awful.menu.new({
+    items = {
+        { "awesome", awesomemenu, beautiful.awesome_icon },
+        { "open terminal", terminal }
+    }
+})
+
+--}}}
+--------------------------------------------------------------------------------
 -- {{{ Tags
 
 tags = {}
 for s = 1, screen.count() do
     tags[s] = {}
     -- Give the first 3 tag special names
-    tags[s][1] = tag({ name = "1", layout = defaultLayout })
-    tags[s][2] = tag({ name = "2", layout = defaultLayout })
+    tags[s][1] = tag({ name = "1-term", layout = defaultLayout })
+    tags[s][2] = tag({ name = "2-web", layout = defaultLayout })
     -- Put them on the screen
     for tagnumber = 1, 2 do
         tags[s][tagnumber].screen = s
@@ -92,25 +105,11 @@ for s = 1, screen.count() do
 end
 
 -- }}}
---------------------------------------------------------------------------------
---{{{ Menu
--- Popup menu when we rightclick the desktop
-
--- Submenu
-awesomemenu = {
-    { "restart", awesome.restart },
-    { "quit", awesome.quit }
-}
--- Main menu
-mainmenu = awful.menu.new({ items = {
-                            { "terminal", terminal },
-                            { "awesome", awesomemenu, beautiful.awesome_icon }
-                        }
-})
-
---}}}
 -------------------------------------------------------------------------------------
 --{{{ Widgets
+
+wi_launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                      menu = mainmenu })
 
 -- Create a systray
 wi_systray = widget({ type = "systray", align = "right" })
@@ -122,7 +121,7 @@ wi_clock = widget({ type = "textbox", align = "right" })
 wi_batt_stat = widget({ type = "textbox", align = "right" })
 
 -- Create a wibox for each screen and add it
-mywibox = {}
+statusbar = {}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -157,16 +156,24 @@ for s = 1, screen.count() do
                                               end, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = wibox({ position = "top", fg = beautiful.fg_normal, bg = beautiful.bg_normal })
+    statusbar[s] = wibox({
+        position = "top",
+        height = "16",
+        fg = beautiful.fg_normal,
+        bg = beautiful.bg_normal, 
+        border_color = beautiful.border_normal, 
+        border_width = beautiful.border_width
+    })
     -- Add widgets to the wibox - order matters
-    mywibox[s].widgets = { mytaglist[s],
+    statusbar[s].widgets = { wi_launcher,
+                           mytaglist[s],
                            mytasklist[s],
                            mypromptbox[s],
                            wi_clock,
                            wi_batt_stat,
                            mylayoutbox[s],
                            s == 1 and wi_systray or nil}
-    mywibox[s].screen = s
+    statusbar[s].screen = s
 end
 
 --}}}
