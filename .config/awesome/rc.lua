@@ -20,7 +20,7 @@ use_titlebar = false
 --------------------------------------------------------------------------------
 --{{{ Register theme (don't change this)
 
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme)
+beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme")
 
 --}}}
 --------------------------------------------------------------------------------
