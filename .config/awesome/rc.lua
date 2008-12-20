@@ -97,15 +97,16 @@ end
 -- Popup menu when we rightclick the desktop
 
 -- Submenu
-awesomemenu         = { { "Edit config" , terminal .. " -e vim " .. awful.util.getdir("config").."/rc.lua" }
-                      , { "Restart"     , awesome.restart }
-                      , { "Quit"        , awesome.quit }
-                      }
+awesomemenu = {
+    { "restart", awesome.restart },
+    { "quit", awesome.quit }
+}
 -- Main menu
-mainmenu            = awful.menu.new({ items = { { "Terminal"    , terminal }
-                                               , { "Awesome"     , awesomemenu }
-                                               }
-                                     })
+mainmenu = awful.menu.new({ items = {
+                            { "terminal", terminal },
+                            { "awesome", awesomemenu, beautiful.awesome_icon }
+                        }
+})
 
 --}}}
 -------------------------------------------------------------------------------------
