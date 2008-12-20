@@ -36,11 +36,11 @@ function batteryInfo(adapter)
     if sta:match("Charging") then
         dir = "^"
         battery = "A/C " .. battery
-        battery = setFg("#3465a4", battery)
+        battery = setFg("#3465a4", dir)
     elseif sta:match("Discharging") then
         dir = "v"
         if tonumber(battery) >= 25 and tonumber(battery) <= 50 then
-            battery = setFg("#ffc123", battery)
+            battery = setFg("#ffc123", dir)
         elseif tonumber(battery) < 25 then
             if tonumber(battery) <= 10 then
                 naughty.notify({
@@ -52,14 +52,14 @@ function batteryInfo(adapter)
                                     bg       = beautiful.bg_focus
                                })
             end
-            battery = setFg("#ff6565", battery)
+            battery = setFg("#ff6565", dir)
         else
             battery = battery
         end
     else
         dir = "="
         battery = "A/C"
-        battery = setFg("#93d44f", battery)
+        battery = setFg("#93d44f", dir)
     end
     
     batterywidget.text = " Battery: " .. dir .. battery .. "%" .. dir .. " "
