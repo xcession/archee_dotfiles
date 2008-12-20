@@ -1,5 +1,5 @@
 -- awesome 3.1 configuration file by xcession
--- last update: 20/12/08
+-- last update: 21/12/08
 
 --------------------------------------------------------------------------------
 --{{{ Imports
@@ -7,12 +7,40 @@
 -- Load default libraries
 require("awful")
 require("beautiful")
+-- Naughty is a notification library (like gnome-notifications)
+require("naughty")
 
 --}}}
 --------------------------------------------------------------------------------
 --{{{ Theme!
 
-theme_name = "xcession"
+beautiful.font                = "Terminus 8"
+
+beautiful.bg_normal           = "#000000AA"
+beautiful.fg_normal           = "#EFEFEF"
+
+beautiful.bg_focus            = "#000000"
+beautiful.fg_focus            = "#FF0033"
+
+beautiful.bg_urgent           = "#FF0033AA"
+beautiful.fg_urgent           = "#EFEFEF"
+
+beautiful.border_width        = "1"
+beautiful.border_normal       = "#4C4C4C66"
+beautiful.border_focus        = "#FF003366"
+beautiful.border_marked       = "#FF000066"
+
+beautiful.taglist_squares_sel       = "/usr/share/awesome/themes/default/taglist/squarefw.png"
+beautiful.taglist_squares_unsel     = "/usr/share/awesome/themes/default/taglist/squarew.png"
+beautiful.tasklist_floating_icon    = "/usr/share/awesome/themes/default/tasklist/floatingw.png"
+beautiful.awesome_icon              = "/usr/share/awesome/icons/awesome16.png"
+
+beautiful.menu_submenu_icon         = awful.util.getdir("config").."/icons/submenu.png"
+beautiful.menu_height               = "16"
+beautiful.menu_width                = "100"
+
+beautiful.taglist_squares = true
+beautiful.titlebar_close_button = true
 
 use_titlebar = false
 
@@ -20,19 +48,18 @@ use_titlebar = false
 --------------------------------------------------------------------------------
 --{{{ Register theme (don't change this)
 
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name)
+awful.beautiful.register(beautiful)
+awesome.font(beautiful.font)
 
 --}}}
 --------------------------------------------------------------------------------
 --{{{ Variables
 
--- This is used later as the default terminal and editor to run
-terminal = "urxvt"
-editor = os.getenv("EDITOR") or "vi"
-editor_cmd = terminal .. " -e " .. editor
-
 -- Default modkey
 modkey = "Mod4"
+
+-- This is used later as the default terminal and editor to run
+terminal = "urxvt"
 
 -- The layouts
 layouts =
@@ -100,7 +127,6 @@ end
 -- Create a laucher widget and a main menu
 wi_menu = {
    { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
    { "restart", awesome.restart },
    { "quit", awesome.quit }
 }
