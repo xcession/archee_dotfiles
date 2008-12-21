@@ -59,7 +59,7 @@ function batteryInfo(adapter)
         battery = setFg("#93d44f", battery)
     end
     
-    batterywidget.text = " Battery: " .. battery .. " "
+    batterywidget.text = " " .. battery .. " "
 end
 
 --}}}

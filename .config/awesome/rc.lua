@@ -123,7 +123,7 @@ end
 --{{{ Widgets
 
 -- Separator icon
-separator = widget({ type = "imagebox", name = "separator", align = "right" })
+separator = widget({ type = "imagebox", align = "right" })
 separator.image = image(awful.util.getdir("config") .. "/icons/separator.png")
 
 -- Create a systray
@@ -133,6 +133,8 @@ systray = widget({ type = "systray", align = "right" })
 clockwidget = widget({ type = "textbox", align = "right" })
 
 -- Create a battery widget
+batteryicon = widget({ type = "imagebox", align = "right" })
+batteryicon.image = image(awful.util.getdir("config") .. "/icons/batteryw.png")
 batterywidget = widget({ type = "textbox", align = "right" })
 batteryInfo("BAT0")
 
@@ -192,6 +194,7 @@ for s = 1, screen.count() do
                                 mytasklist[s],
                                 mypromptbox[s],
                                 separator,
+                                batteryicon,
                                 batterywidget,
                                 separator,
                                 clockwidget,
@@ -456,13 +459,6 @@ awful.hooks.arrange.register(function (screen)
     ]]
 end)
 
---function get_command_output (command)
---    local c = io.popen(command)
---    local output = {}
---    i = 0
---    return c:read("*line")
---end
-
 -- Timed hooks for the widget functions
 -- 1 second
 awful.hooks.timer.register(1, function ()
@@ -471,7 +467,6 @@ end)
 
 -- 20 seconds
 awful.hooks.timer.register(20, function ()
-    -- wi_batt_stat.text = " Battery: " .. get_command_output("~/bin/battstat") .. " "
     batteryInfo("BAT0")
 end)
 
