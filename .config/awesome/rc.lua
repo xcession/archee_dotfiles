@@ -114,6 +114,10 @@ end
 -------------------------------------------------------------------------------------
 --{{{ Widgets
 
+-- Separator icon
+separator = widget({ type = "imagebox", name = "separator", align = "right" })
+separator.image = image(os.getenv("HOME") .. "/.config/awesome/icons/separator.png")
+
 -- Create a systray
 systray = widget({ type = "systray", align = "right" })
 
@@ -171,8 +175,11 @@ for s = 1, screen.count() do
                                 mytaglist[s],
                                 mytasklist[s],
                                 mypromptbox[s],
+                                separator,
                                 clockwidget,
+                                separator,
                                 batterywidget,
+                                separator,
                                 mylayoutbox[s],
                                 s == 1 and systray or nil
                             }
