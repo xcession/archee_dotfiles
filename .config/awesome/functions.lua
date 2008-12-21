@@ -34,11 +34,9 @@ function batteryInfo(adapter)
     local battery = math.floor(cur * 100 / cap)
     
     if sta:match("Charging") then
-        dir = "^"
         battery = "A/C " .. battery
-        battery = setFg("#3465a4", battery)
+        battery = setFg("#f57900", battery)
     elseif sta:match("Discharging") then
-        dir = "v"
         if tonumber(battery) >= 25 and tonumber(battery) <= 50 then
             battery = setFg("#ffc123", battery)
         elseif tonumber(battery) < 25 then
@@ -57,12 +55,11 @@ function batteryInfo(adapter)
             battery = battery
         end
     else
-        dir = "="
         battery = "A/C"
         battery = setFg("#93d44f", battery)
     end
     
-    batterywidget.text = " Battery: " .. dir .. battery .. dir .. " "
+    batterywidget.text = " Battery: " .. battery .. " "
 end
 
 --}}}

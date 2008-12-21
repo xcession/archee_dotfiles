@@ -132,18 +132,25 @@ batteryInfo("BAT0")
 statusbar = {}
 mypromptbox = {}
 mylayoutbox = {}
-mytaglist = {}
-mytaglist.buttons = { button({ }, 1, awful.tag.viewonly),
-                      button({ modkey }, 1, awful.client.movetotag),
-                      button({ }, 3, function (tag) tag.selected = not tag.selected end),
-                      button({ modkey }, 3, awful.client.toggletag),
-                      button({ }, 4, awful.tag.viewnext),
-                      button({ }, 5, awful.tag.viewprev) }
+taglist = {}
+-- Initialize which buttons do what when clicking the taglist
+taglist.buttons =   {
+                        button({ }, 1, awful.tag.viewonly),
+                        button({ modkey }, 1, awful.client.movetotag),
+                        button({ }, 3, function (tag) tag.selected = not tag.selected end),
+                        button({ modkey }, 3, awful.client.toggletag),
+                        button({ }, 4, awful.tag.viewnext),
+                        button({ }, 5, awful.tag.viewprev)
+                    }
+
 mytasklist = {}
-mytasklist.buttons = { button({ }, 1, function (c) client.focus = c; c:raise() end),
-                       button({ }, 3, function () awful.menu.clients({ width=250 }) end),
-                       button({ }, 4, function () awful.client.focus.byidx(1) end),
-                       button({ }, 5, function () awful.client.focus.byidx(-1) end) }
+-- Initialize which buttons do what when clicking the tasklist
+mytasklist.buttons = {
+                        button({ }, 1, function (c) client.focus = c; c:raise() end),
+                        button({ }, 3, function () awful.menu.clients({ width=250 }) end),
+                        button({ }, 4, function () awful.client.focus.byidx(1) end),
+                        button({ }, 5, function () awful.client.focus.byidx(-1) end)
+                     }
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
@@ -156,7 +163,7 @@ for s = 1, screen.count() do
                              button({ }, 4, function () awful.layout.inc(layouts, 1) end),
                              button({ }, 5, function () awful.layout.inc(layouts, -1) end) })
     -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist.new(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    taglist[s] = awful.widget.taglist.new(s, awful.widget.taglist.label.all, taglist.buttons)
 
     -- Create a tasklist widget
     mytasklist[s] = awful.widget.tasklist.new(function(c)
@@ -172,7 +179,7 @@ for s = 1, screen.count() do
     })
     -- Add widgets to the wibox - order matters
     statusbar[s].widgets = {
-                                mytaglist[s],
+                                taglist[s],
                                 mylayoutbox[s],
                                 mytasklist[s],
                                 mypromptbox[s],
