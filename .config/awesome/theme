@@ -1,4 +1,4 @@
--- awesome 3 theme file by xcession
+-- awesome 3.1 theme file by xcession
 -- last update: 21/12/08
 
 --------------------------------------------------------------------------------
@@ -19,15 +19,9 @@ border_normal       = #4C4C4C66
 border_focus        = #FF003366
 border_marked       = #FF000066
 
-taglist_squares_sel       = ./taglist/squarefw.png
-taglist_squares_unsel     = ./taglist/squarew.png
-tasklist_floating_icon    = ./tasklist/floatingw.png
-awesome_icon              = ./icons/awesome16.png
-
-menu_submenu_icon         = ./icons/submenu.png
-
 taglist_squares = true
 titlebar_close_button = true
 
 # You can use your own command to set your wallpaper
 # wallpaper_cmd = nitrogen --restore
+
