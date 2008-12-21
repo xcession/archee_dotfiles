@@ -140,7 +140,7 @@ batteryInfo("BAT0")
 
 -- Create a wibox for each screen and add it
 statusbar = {}
-mypromptbox = {}
+promptbox = {}
 layouticon = {}
 taglist = {}
 -- Initialize which buttons do what when clicking the taglist
@@ -153,9 +153,9 @@ taglist.buttons =   {
                         button({ }, 5, awful.tag.viewprev)
                     }
 
-mytasklist = {}
+tasklist = {}
 -- Initialize which buttons do what when clicking the tasklist
-mytasklist.buttons = {
+tasklist.buttons = {
                         button({ }, 1, function (c) client.focus = c; c:raise() end),
                         button({ }, 3, function () awful.menu.clients({ width=250 }) end),
                         button({ }, 4, function () awful.client.focus.byidx(1) end),
@@ -164,7 +164,7 @@ mytasklist.buttons = {
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
-    mypromptbox[s] = widget({ type = "textbox", align = "left" })
+    promptbox[s] = widget({ type = "textbox", align = "left" })
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     layouticon[s] = widget({ type = "imagebox", align = "right" })
@@ -176,9 +176,9 @@ for s = 1, screen.count() do
     taglist[s] = awful.widget.taglist.new(s, awful.widget.taglist.label.all, taglist.buttons)
 
     -- Create a tasklist widget
-    mytasklist[s] = awful.widget.tasklist.new(function(c)
+    tasklist[s] = awful.widget.tasklist.new(function(c)
                                                   return awful.widget.tasklist.label.currenttags(c, s)
-                                              end, mytasklist.buttons)
+                                              end, tasklist.buttons)
 
     -- Create the wibox
     statusbar[s] = wibox({
@@ -191,8 +191,8 @@ for s = 1, screen.count() do
     statusbar[s].widgets = {
                                 taglist[s],
                                 layouticon[s],
-                                mytasklist[s],
-                                mypromptbox[s],
+                                tasklist[s],
+                                promptbox[s],
                                 separator,
                                 batteryicon,
                                 batterywidget,
@@ -265,7 +265,7 @@ keybinding({ modkey }, "Escape", awful.tag.history.restore):add()
 keybinding({ modkey }, "Return", function () awful.util.spawn(terminal) end):add()
 
 keybinding({ modkey, "Control" }, "r", function ()
-                                           mypromptbox[mouse.screen].text =
+                                           promptbox[mouse.screen].text =
                                                awful.util.escape(awful.util.restart())
                                         end):add()
 keybinding({ modkey, "Shift" }, "q", awesome.quit):add()
@@ -299,28 +299,28 @@ keybinding({ modkey, "Shift" }, "space", function () awful.layout.inc(layouts, -
 
 -- Prompt
 keybinding({ modkey }, "F1", function ()
-                                 awful.prompt.run({ prompt = "Run: " }, mypromptbox[mouse.screen], awful.util.spawn, awful.completion.bash,
+                                 awful.prompt.run({ prompt = "Run: " }, promptbox[mouse.screen], awful.util.spawn, awful.completion.bash,
                                                   awful.util.getdir("cache") .. "/history")
                              end):add()
 keybinding({ modkey }, "F4", function ()
-                                 awful.prompt.run({ prompt = "Run Lua code: " }, mypromptbox[mouse.screen], awful.util.eval, awful.prompt.bash,
+                                 awful.prompt.run({ prompt = "Run Lua code: " }, promptbox[mouse.screen], awful.util.eval, awful.prompt.bash,
                                                   awful.util.getdir("cache") .. "/history_eval")
                              end):add()
 
 keybinding({ modkey, "Ctrl" }, "i", function ()
                                         local s = mouse.screen
-                                        if mypromptbox[s].text then
-                                            mypromptbox[s].text = nil
+                                        if promptbox[s].text then
+                                            promptbox[s].text = nil
                                         elseif client.focus then
-                                            mypromptbox[s].text = nil
+                                            promptbox[s].text = nil
                                             if client.focus.class then
-                                                mypromptbox[s].text = "Class: " .. client.focus.class .. " "
+                                                promptbox[s].text = "Class: " .. client.focus.class .. " "
                                             end
                                             if client.focus.instance then
-                                                mypromptbox[s].text = mypromptbox[s].text .. "Instance: ".. client.focus.instance .. " "
+                                                promptbox[s].text = promptbox[s].text .. "Instance: ".. client.focus.instance .. " "
                                             end
                                             if client.focus.role then
-                                                mypromptbox[s].text = mypromptbox[s].text .. "Role: ".. client.focus.role
+                                                promptbox[s].text = promptbox[s].text .. "Role: ".. client.focus.role
                                             end
                                         end
                                     end):add()
