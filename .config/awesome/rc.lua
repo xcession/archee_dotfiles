@@ -165,7 +165,7 @@ for s = 1, screen.count() do
     mypromptbox[s] = widget({ type = "textbox", align = "left" })
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-    layouticon[s] = widget({ type = "textbox", align = "right" })
+    layouticon[s] = widget({ type = "imagebox", align = "right" })
     layouticon[s]:buttons({ button({ }, 1, function () awful.layout.inc(layouts, 1) end),
                              button({ }, 3, function () awful.layout.inc(layouts, -1) end),
                              button({ }, 4, function () awful.layout.inc(layouts, 1) end),
