@@ -139,7 +139,7 @@ batteryInfo("BAT0")
 -- Create a wibox for each screen and add it
 statusbar = {}
 mypromptbox = {}
-mylayoutbox = {}
+layouticon = {}
 taglist = {}
 -- Initialize which buttons do what when clicking the taglist
 taglist.buttons =   {
@@ -165,8 +165,8 @@ for s = 1, screen.count() do
     mypromptbox[s] = widget({ type = "textbox", align = "left" })
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-    mylayoutbox[s] = widget({ type = "textbox", align = "right" })
-    mylayoutbox[s]:buttons({ button({ }, 1, function () awful.layout.inc(layouts, 1) end),
+    layouticon[s] = widget({ type = "textbox", align = "right" })
+    layouticon[s]:buttons({ button({ }, 1, function () awful.layout.inc(layouts, 1) end),
                              button({ }, 3, function () awful.layout.inc(layouts, -1) end),
                              button({ }, 4, function () awful.layout.inc(layouts, 1) end),
                              button({ }, 5, function () awful.layout.inc(layouts, -1) end) })
@@ -188,7 +188,7 @@ for s = 1, screen.count() do
     -- Add widgets to the wibox - order matters
     statusbar[s].widgets = {
                                 taglist[s],
-                                mylayoutbox[s],
+                                layouticon[s],
                                 mytasklist[s],
                                 mypromptbox[s],
                                 separator,
@@ -428,9 +428,9 @@ end)
 awful.hooks.arrange.register(function (screen)
     local layout = awful.layout.get(screen)
     if layout then
-        mylayoutbox[screen].text = " " .. awful.layout.get(screen) .. " "
+        layouticon[screen].image = image(awful.util.getdir("config") .. "/icons/layouts/" .. awful.layout.get(screen) .. "w.png")
     else
-        mylayoutbox[screen].image = nil
+        layouticon[screen].image = nil
     end
 
     -- Give focus to the latest client in history if no window has focus
