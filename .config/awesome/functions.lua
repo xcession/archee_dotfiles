@@ -53,6 +53,7 @@ function batteryInfo(adapter)
             battery = setFg("#ff6565", battery)
         else
             battery = battery
+            battery = setFg("#93d44f", battery)
         end
     else
         battery = "A/C"
