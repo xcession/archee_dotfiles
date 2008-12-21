@@ -14,14 +14,14 @@ require("naughty")
 --------------------------------------------------------------------------------
 --{{{ Theme!
 
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme")
+beautiful.init(awful.util.getdir("config") .. "/theme")
 use_titlebar = false
 
 --}}}
 -------------------------------------------------------------------------------------
 --{{{ Load functions
 
-loadfile(os.getenv("HOME") .. "/.config/awesome/functions.lua")()
+loadfile(awful.util.getdir("config") .. "/functions.lua")()
 
 --}}}
 --------------------------------------------------------------------------------
