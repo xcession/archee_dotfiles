@@ -16,12 +16,12 @@ require("naughty")
 
 beautiful.init(awful.util.getdir("config") .. "/theme")
 
-taglist_squares_sel       = awful.util.getdir("config") .. "/taglist/squarefw.png"
-taglist_squares_unsel     = awful.util.getdir("config") .. "/taglist/squarew.png"
-tasklist_floating_icon    = awful.util.getdir("config") .. "/tasklist/floatingw.png"
-awesome_icon              = awful.util.getdir("config") .. "/icons/awesome16.png"
+beautiful.taglist_squares_sel       = awful.util.getdir("config") .. "/taglist/squarefw.png"
+beautiful.taglist_squares_unsel     = awful.util.getdir("config") .. "/taglist/squarew.png"
+beautiful.tasklist_floating_icon    = awful.util.getdir("config") .. "/tasklist/floatingw.png"
+beautiful.awesome_icon              = awful.util.getdir("config") .. "/icons/awesome16.png"
 
-menu_submenu_icon         = awful.util.getdir("config") .. "/icons/submenu.png"
+beautiful.menu_submenu_icon         = awful.util.getdir("config") .. "/icons/submenu.png"
 
 use_titlebar = false
 
