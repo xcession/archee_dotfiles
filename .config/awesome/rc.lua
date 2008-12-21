@@ -173,14 +173,13 @@ for s = 1, screen.count() do
     -- Add widgets to the wibox - order matters
     statusbar[s].widgets = {
                                 mytaglist[s],
+                                mylayoutbox[s],
                                 mytasklist[s],
                                 mypromptbox[s],
                                 separator,
-                                clockwidget,
-                                separator,
                                 batterywidget,
                                 separator,
-                                mylayoutbox[s],
+                                clockwidget,
                                 s == 1 and systray or nil
                             }
     statusbar[s].screen = s
