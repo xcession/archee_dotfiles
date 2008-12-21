@@ -116,7 +116,7 @@ end
 
 -- Separator icon
 separator = widget({ type = "imagebox", name = "separator", align = "right" })
-separator.image = image(os.getenv("HOME") .. "/.config/awesome/icons/separator.png")
+separator.image = image(awful.util.getdir("config") .. "/icons/separator.png")
 
 -- Create a systray
 systray = widget({ type = "systray", align = "right" })
