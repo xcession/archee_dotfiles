@@ -1,0 +1,42 @@
+#-------------------------------------------------------------------------------------
+# ~/.screenrc
+# Last modified 25/12/2008
+#-------------------------------------------------------------------------------------
+
+defscrollback 10000
+deflogin on
+altscreen on
+autodetach on
+msgwait 2 # 1 second messages
+activity "active: %n (%t) [%w:%s]"
+bell "bell: %n (%t) [%w:%s]^G"
+vbell_msg "[[[ ding ]]]"
+vbell off
+startup_message off
+defutf8 on
+
+termcapinfo rxvt|rxvt-unicode|urxvt|rxvt-256color|screen|xs|rxvt ti@:te@
+
+#caption always "%{=bu kb} %=< %?%-Lw%?%{kc}[:%n %t:]%{kb}%?%+Lw%? >%= "
+#hardstatus alwayslastline "%{+b bw}[%H :: $USER]%{=b kw} %=[[ %1` | %2` | %3` | %4` ]]%=%{=b bw}[%d.%m.%y %0c]"
+#caption always "%{= kb}[ %{kG}$USER%{kW}@%{kG}%H %{b}][ %=%{w}%?%-Lw%?%{b}(%{W}%n*%f %t%?(%u)%?%{b})%{w}%?%+Lw%?%= %{b}][%{kB} %d.%m.%Y %{kW}%0c %{kb}]"
+#caption always "%{= kb}[%{kW} %2` | %3` %{b}][ %=%{w}%?%-Lw%?%{b}(%{W}%n*%f %t%?(%u)%?%{b})%{w}%?%+Lw%?%= %{b}][%{kB} %d.%m.%Y %{kW}%0c %{kb}]"
+caption always "%?%{ Wk}%-Lw%?%{Rk}%n*%f %t%?(%u)%?%?%{Wk}%+Lw%? %=%l %{Rk}%=%c %{Rk}%d.%M.%Y"
+sorendition +b kG
+
+# Default apps
+#screen -t torrent rtorrent
+#screen -t irc weechat-curses
+#screen zsh
+#screen -t log sudo tail -f /var/log/messages.log
+
+bindkey -k k1 select 0
+bindkey -k k2 select 1
+bindkey -k k3 select 2
+bindkey -k k4 select 3
+bindkey -k k5 select 4
+
+bindkey "^[Od" prev
+bindkey "^[Oc" next
+
+select 1
