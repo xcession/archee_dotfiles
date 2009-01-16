@@ -12,7 +12,7 @@ XTerm*scrollBar:	    false
 XTerm*background:	    #000000
 XTerm*foreground:	    #ffffff
 XTerm*saveLines:	    1000
-xterm*utf8:             2
+XTerm*utf8:             2
 
 
 URxvt*font:		        xft:DejaVuSansMono-9
@@ -28,8 +28,9 @@ URxvt.urlLauncher:	    /usr/bin/firefox
 
 URxvt*tintColor:        #000000
 URxvt*shading:          30
+URxvt*transparent:	true
 
-!--[Colours]--! 
+!--[Colours]--!
 URxvt*cursorColor:      #FFAF00
 
 ! tangoesque scheme
@@ -51,7 +52,7 @@ URxvt*cursorColor:      #FFAF00
 ! Mangenta
 *color5:        #ce5c00
 *color13:       #f57900
-! Cyan 
+! Cyan
 *color6:        #89b6e2
 *color14:       #46a4ff
 ! White
